@@ -2649,6 +2649,11 @@ hmac-drbg@^1.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
+html-entities@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-1.3.1.tgz#fb9a1a4b5b14c5daba82d3e34c6ae4fe701a0e44"
+  integrity sha512-rhE/4Z3hIhzHAUKbW8jVcCyuT5oJCXXqhN/6mXXVCpzTmvJnoH2HL/bt3EZ6p55jbFJBeAe1ZNpL5BugLujxNA==
+
 htmlparser2@4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-4.1.0.tgz#9a4ef161f2e4625ebf7dfbe6c0a2f52d18a59e78"
@@ -3047,6 +3052,14 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
+m3u8stream@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/m3u8stream/-/m3u8stream-0.7.1.tgz#74b01a67ca248ac7bbdc263a65d9d8d2c479a65c"
+  integrity sha512-z6ldnAdhbuWOL6LmMkwptSZGzj+qbRytMKLTbNicwF/bJMjf9U9lqD57RNQUFecvWadEkzy6PDjcNJFFgi19uQ==
+  dependencies:
+    miniget "^1.6.1"
+    sax "^1.2.4"
+
 make-dir@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-2.1.0.tgz#5f0310e18b8be898cc07009295a30ae41e91e6f5"
@@ -3140,6 +3153,16 @@ mini-css-extract-plugin@0.8.0:
     normalize-url "1.9.1"
     schema-utils "^1.0.0"
     webpack-sources "^1.1.0"
+
+miniget@^1.6.1:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/miniget/-/miniget-1.7.2.tgz#f95eff50b78d798dddee2460c4aa3c72db1aa23a"
+  integrity sha512-USPNNK2bnHLOplX8BZVMehUkyQizS/DFpBdoH0TS+fM+hQoLNg9tWg4MeY9wE8gfY0pbzmx5UBEODujt3Lz8AA==
+
+miniget@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/miniget/-/miniget-2.0.1.tgz#e2188573317ad8239bab33f056aae64804fc8e47"
+  integrity sha512-MX+QfVIPAutz6c+T7WKuFKtjcw0nOyRRh1ubhTDD+z/e/pKcSAsfAV63aQKUgb1MFRT1GyfJeW53N5fHkX0wIA==
 
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
@@ -4093,6 +4116,11 @@ sass-loader@8.0.2:
     schema-utils "^2.6.1"
     semver "^6.3.0"
 
+sax@^1.1.3, sax@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
+  integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
+
 scheduler@^0.19.1:
   version "0.19.1"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.19.1.tgz#4f3e2ed2c1a7d65681f4c854fa8c5a1ccb40f196"
@@ -4800,3 +4828,13 @@ yallist@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
+
+ytdl-core@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-3.2.2.tgz#056eae00209410734f11046f8d7947d7e39514bf"
+  integrity sha512-DVE7uhk4WYB2Op742QQVGE/b9G7cr9kSB3ZDpDXmyRPhO55h9u8gwORlDIHWKucWVmCsdsdKzNP89QylpJEgiw==
+  dependencies:
+    html-entities "^1.3.1"
+    m3u8stream "^0.7.1"
+    miniget "^2.0.1"
+    sax "^1.1.3"

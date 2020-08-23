@@ -1,11 +1,11 @@
-import youtubedl from 'youtube-dl'
+import ytdl from 'ytdl-core'
 
-export default (req, res) => {
+export default async(req, res) => {
     const { videoId } = req.query
-    const url = `https://www.youtube.com/watch?v=${videoId}`
-    const options = ['--get-url']
-    youtubedl.getInfo(url, options, (err, info) => {
-        if (err) throw err
-        res.json(info)
-    })
+    let info = await ytdl.getBasicInfo(videoId)
+    const { url } = info.formats.find((elem) => elem.itag === 18)
+    const {
+        videoDetails: { title, description }
+    } = info
+    res.json({ url, title, description })
 }
