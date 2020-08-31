@@ -5,7 +5,7 @@ export default async(req, res) => {
     let info = await ytdl.getBasicInfo(videoId)
     const { url } = info.formats.find((elem) => elem.itag === 18)
     const {
-        videoDetails: { title, description }
+        videoDetails: { title, description = {}, keywords = [] }
     } = info
-    res.json({ url, title, description })
+    res.json({ url, title, description, keywords })
 }
