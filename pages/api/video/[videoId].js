@@ -5,7 +5,12 @@ export default async(req, res) => {
     let info = await ytdl.getBasicInfo(videoId)
     const { url } = info.formats.find((elem) => elem.itag === 18)
     const {
-        videoDetails: { title, description = {}, keywords = [] }
+        videoDetails: { title, description = {}, keywords = [] },
+        player_response: {
+            captions: {
+                playerCaptionsTracklistRenderer: { captionTracks = [] }
+            }
+        }
     } = info
-    res.json({ url, title, description, keywords })
+    res.json({ url, title, description, keywords, captionTracks })
 }

@@ -1,11 +1,20 @@
 import fetch from 'isomorphic-unfetch'
-import { Chip, Container, Typography } from '@material-ui/core'
+import {
+	Chip,
+	Container,
+	Typography,
+	List,
+	ListItem,
+	ListItemAvatar,
+	Avatar
+} from '@material-ui/core'
 
 const VideoPage = ({
 	title,
 	description: { simpleText: description = '' },
 	keywords,
-	url
+	url,
+	captionTracks
 }) => {
 	const keywordsBlock = (
 		<div>
@@ -23,7 +32,6 @@ const VideoPage = ({
 				return (
 					<Chip
 						key={'chip-' + index}
-						color={randomColor}
 						style={{ marginLeft: 5, marginTop: 5, color: randomColor }}
 						label={elem}
 						variant='outlined'
@@ -33,6 +41,50 @@ const VideoPage = ({
 			})}
 		</div>
 	)
+
+	const subtitlesFileLinks = (
+		<List>
+			{captionTracks.map((elem, index) => {
+				const {
+					baseUrl,
+					languageCode,
+					name: { simpleText: label }
+				} = elem
+				return (
+					<ListItem key={`subtitles-${label}-${index}`}>
+						<ListItemAvatar>
+							<Avatar color='primary'>{languageCode}</Avatar>
+						</ListItemAvatar>
+						<a
+							href={`${baseUrl}&fmt=vtt`}
+							target='_blank'
+							rel='noopener noreferrer'
+						>
+							{label}
+						</a>
+					</ListItem>
+				)
+			})}
+		</List>
+	)
+
+	const subtitlesTracksForVideo = captionTracks.map((elem, index) => {
+		const {
+			baseUrl,
+			languageCode,
+			name: { simpleText: label }
+		} = elem
+		return (
+			// doesn't work because of 'crosorigin' problems
+			<track
+				key={`${label}-${index}`}
+				kind='captions'
+				src={`${baseUrl}&fmt=vtt`}
+				srcLang={languageCode}
+				label={label}
+			></track>
+		)
+	})
 
 	return (
 		<div>
@@ -45,7 +97,12 @@ const VideoPage = ({
 					<p />
 					{keywordsBlock}
 					<p />
-					<video controls src={url}></video>
+					<video controls src={url}>
+						{subtitlesTracksForVideo}
+					</video>
+					<p />
+					<Typography variant='subtitle1'> Available subtitles:</Typography>
+					{subtitlesFileLinks}
 					<p />
 					<Typography style={{ whiteSpace: 'pre-line' }} variant='body2'>
 						{description}
