@@ -1,6 +1,5 @@
 import fetch from 'isomorphic-unfetch'
-import { Chip, Container, CssBaseline, Typography } from '@material-ui/core'
-import { palette } from '@material-ui/system'
+import { Chip, Container, Typography } from '@material-ui/core'
 
 const VideoPage = ({
 	title,
