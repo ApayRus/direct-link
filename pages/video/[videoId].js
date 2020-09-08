@@ -115,7 +115,7 @@ const VideoPage = ({
 
 export async function getServerSideProps({ query }) {
 	const { videoId } = query
-	const res = await fetch(`http://localhost:3000/api/video/${videoId}`)
+	const res = await fetch(`${process.env.DOMAIN}/api/video/${videoId}`)
 	const info = await res.json()
 
 	// By returning { props: posts }, the Blog component
