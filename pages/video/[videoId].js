@@ -97,7 +97,7 @@ const VideoPage = ({
 					<p />
 					{keywordsBlock}
 					<p />
-					<video controls src={urlVideo} title={title}>
+					<video controls src={urlVideo}>
 						{subtitlesTracksForVideo}
 					</video>
 					<p />
