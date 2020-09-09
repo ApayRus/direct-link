@@ -18,6 +18,13 @@ const VideoPage = ({
 }) => {
 	const keywordsBlock = (
 		<div>
+			<Head>
+				<title>{title}</title>
+				<meta name='viewport' content='initial-scale=1.0, width=device-width' />
+				<meta name='description' content={description} />
+				<meta name='keywords' content={keywords.join(', ')} />
+			</Head>
+
 			{keywords.map((elem, index) => {
 				const colors = [
 					'#115293',
