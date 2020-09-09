@@ -5,28 +5,40 @@ import {
 	List,
 	ListItem,
 	ListItemAvatar,
-	Avatar
+	Avatar,
+	Grid
 } from '@material-ui/core'
 
 import Head from 'next/head'
 
-const VideoPage = ({
-	title,
-	description: { simpleText: description = '' },
-	keywords,
-	urlVideo,
-	urlAudio,
-	captionTracks
-}) => {
+const VideoPage = (props) => {
+	const {
+		title,
+		description: { simpleText: description = '' },
+		keywords,
+		urlVideo,
+		urlAudio,
+		captionTracks,
+		thumbnails
+	} = props
+
+	const biggestThumbnailUrl = thumbnails[thumbnails.length - 1].url
+
+	const header = (
+		<Head>
+			<title>{title}</title>
+			<meta name='viewport' content='initial-scale=1.0, width=device-width' />
+			<meta name='description' content={description} />
+			<meta name='keywords' content={keywords.join(', ')} />
+			{/* For Social media */}
+			<meta property='og:title' content={title} />
+			<meta property='og:description' content={description} />
+			<meta property='og:image' content={biggestThumbnailUrl} />
+		</Head>
+	)
+
 	const keywordsBlock = (
 		<div>
-			<Head>
-				<title>{title}</title>
-				<meta name='viewport' content='initial-scale=1.0, width=device-width' />
-				<meta name='description' content={description} />
-				<meta name='keywords' content={keywords.join(', ')} />
-			</Head>
-
 			{keywords.map((elem, index) => {
 				const colors = [
 					'#115293',
@@ -53,27 +65,31 @@ const VideoPage = ({
 
 	const subtitlesFileLinks = (
 		<List>
-			{captionTracks.map((elem, index) => {
-				const {
-					baseUrl,
-					languageCode,
-					name: { simpleText: label }
-				} = elem
-				return (
-					<ListItem key={`subtitles-${label}-${index}`}>
-						<ListItemAvatar>
-							<Avatar color='primary'>{languageCode}</Avatar>
-						</ListItemAvatar>
-						<a
-							href={`${baseUrl}&fmt=vtt`}
-							target='_blank'
-							rel='noopener noreferrer'
-						>
-							{label}
-						</a>
-					</ListItem>
-				)
-			})}
+			<Grid container>
+				{captionTracks.map((elem, index) => {
+					const {
+						baseUrl,
+						languageCode,
+						name: { simpleText: label }
+					} = elem
+					return (
+						<Grid item md={4} xs={6}>
+							<ListItem key={`subtitles-${label}-${index}`}>
+								<ListItemAvatar>
+									<Avatar color='primary'>{languageCode}</Avatar>
+								</ListItemAvatar>
+								<a
+									href={`${baseUrl}&fmt=vtt`}
+									target='_blank'
+									rel='noopener noreferrer'
+								>
+									{label}
+								</a>
+							</ListItem>
+						</Grid>
+					)
+				})}
+			</Grid>
 		</List>
 	)
 
@@ -97,6 +113,7 @@ const VideoPage = ({
 
 	return (
 		<div>
+			{header}
 			<Container maxWidth='sm'>
 				<article>
 					<p />
@@ -106,11 +123,11 @@ const VideoPage = ({
 					<p />
 					{keywordsBlock}
 					<p />
-					<video controls src={urlVideo}>
+					<video controls src={urlVideo} style={{ width: '100%' }}>
 						{subtitlesTracksForVideo}
 					</video>
 					<p />
-					<audio controls src={urlAudio}></audio>
+					<audio controls src={urlAudio} style={{ width: '100%' }} />
 					<p />
 					<Typography variant='subtitle1'> Available subtitles:</Typography>
 					{subtitlesFileLinks}

@@ -6,12 +6,12 @@ export default async(req, res) => {
     const { url: urlVideo } = info.formats.find((elem) => elem.itag === 18)
     const { url: urlAudio } = info.formats.find((elem) => elem.itag === 140)
     const {
-        videoDetails: { title, description = {}, keywords = [] },
+        videoDetails: { title, description = {}, keywords = [], thumbnail: { thumbnails = [] } },
         player_response: {
             captions: {
                 playerCaptionsTracklistRenderer: { captionTracks = [] } = []
             } = []
         }
     } = info
-    res.json({ urlVideo, urlAudio, title, description, keywords, captionTracks })
+    res.json({ urlVideo, urlAudio, title, description, keywords, captionTracks, thumbnails })
 }
