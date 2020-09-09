@@ -12,7 +12,8 @@ const VideoPage = ({
 	title,
 	description: { simpleText: description = '' },
 	keywords,
-	url,
+	urlVideo,
+	urlAudio,
 	captionTracks
 }) => {
 	const keywordsBlock = (
@@ -96,9 +97,11 @@ const VideoPage = ({
 					<p />
 					{keywordsBlock}
 					<p />
-					<video controls src={url}>
+					<video controls src={urlVideo} title={title}>
 						{subtitlesTracksForVideo}
 					</video>
+					<p />
+					<audio controls src={urlAudio}></audio>
 					<p />
 					<Typography variant='subtitle1'> Available subtitles:</Typography>
 					{subtitlesFileLinks}
