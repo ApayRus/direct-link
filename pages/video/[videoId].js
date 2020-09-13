@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core'
 
 import Head from 'next/head'
+import Search from '../../components/Search'
 
 const VideoPage = (props) => {
 	const {
@@ -73,8 +74,8 @@ const VideoPage = (props) => {
 						name: { simpleText: label }
 					} = elem
 					return (
-						<Grid item md={4} xs={6}>
-							<ListItem key={`subtitles-${label}-${index}`}>
+						<Grid key={`subtitles-${label}-${index}`} item md={4} xs={6}>
+							<ListItem>
 								<ListItemAvatar>
 									<Avatar color='primary'>{languageCode}</Avatar>
 								</ListItemAvatar>
@@ -116,6 +117,8 @@ const VideoPage = (props) => {
 			{header}
 			<Container maxWidth='sm'>
 				<article>
+					<p />
+					<Search />
 					<p />
 					<Typography style={{ fontSize: 30 }} variant='h1'>
 						{title}
