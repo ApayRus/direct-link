@@ -45,7 +45,7 @@ export default function CustomizedInputBase() {
 	const onSearchClick = () => {
 		try {
 			const videoId = ytdl.getVideoID(url)
-			router.push(`/video/${videoId}`)
+			router.push(`/video/[videoId]`, `/video/${videoId}`)
 		} catch (e) {
 			console.log(e)
 		}
