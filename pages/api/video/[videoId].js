@@ -1,7 +1,14 @@
 import ytdl from 'ytdl-core'
 
+// for public api 
 export default async(req, res) => {
-    const { videoId } = req.query
+    const { query: { videoId } } = req
+    const response = await getVideoInfo(videoId)
+    res.json(response)
+}
+
+// for use on this server, instead of fetch 
+export async function getVideoInfo(videoId) {
     let info = await ytdl.getInfo(videoId)
     const { url: urlVideo } = info.formats.find((elem) => elem.itag === 18)
     const { url: urlAudio } = info.formats.find((elem) => elem.itag === 140)
@@ -13,5 +20,6 @@ export default async(req, res) => {
             } = []
         }
     } = info
-    res.json({ urlVideo, urlAudio, title, description, keywords, captionTracks, thumbnails })
+    const response = { urlVideo, urlAudio, title, description, keywords, captionTracks, thumbnails }
+    return response
 }

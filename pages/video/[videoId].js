@@ -11,6 +11,7 @@ import {
 
 import Head from 'next/head'
 import Search from '../../components/Search'
+import { getVideoInfo } from '../api/video/[videoId]'
 
 const VideoPage = (props) => {
 	const {
@@ -145,13 +146,8 @@ const VideoPage = (props) => {
 	)
 }
 
-export async function getServerSideProps({ query }) {
-	const { videoId } = query
-	const res = await fetch(`${process.env.DOMAIN}/api/video/${videoId}`)
-	const info = await res.json()
-
-	// By returning { props: posts }, the Blog component
-	// will receive `posts` as a prop at build time
+export async function getServerSideProps({ query: { videoId } }) {
+	const info = await getVideoInfo(videoId)
 	return {
 		props: {
 			...info
