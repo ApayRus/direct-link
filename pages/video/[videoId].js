@@ -1,16 +1,9 @@
-import {
-	Chip,
-	Container,
-	Typography,
-	List,
-	ListItem,
-	ListItemAvatar,
-	Avatar,
-	Grid
-} from '@material-ui/core'
-
-import Head from 'next/head'
+import { Container, Typography } from '@material-ui/core'
+import SubtitleFileLinks from '../../components/video/SubtitleFileLinks'
+import Keywords from '../../components/video/Keywords'
+import Video from '../../components/video/Video'
 import Search from '../../components/Search'
+import Head from '../../components/Head'
 import { getVideoInfo } from '../api/video/[videoId]'
 
 const VideoPage = (props) => {
@@ -25,97 +18,11 @@ const VideoPage = (props) => {
 	} = props
 
 	const biggestThumbnailUrl = thumbnails[thumbnails.length - 1].url
-
-	const header = (
-		<Head>
-			<title>{title}</title>
-			<meta name='viewport' content='initial-scale=1.0, width=device-width' />
-			<meta name='description' content={description} />
-			<meta name='keywords' content={keywords.join(', ')} />
-			{/* For Social media */}
-			<meta property='og:title' content={title} />
-			<meta property='og:description' content={description} />
-			<meta property='og:image' content={biggestThumbnailUrl} />
-		</Head>
-	)
-
-	const keywordsBlock = (
-		<div>
-			{keywords.map((elem, index) => {
-				const colors = [
-					'#115293',
-					'#9a0036',
-					'#d32f2f',
-					'#f57c00',
-					'#1976d2',
-					'#388e3c'
-				]
-				const randomIndex = Math.floor(Math.random() * colors.length)
-				const randomColor = colors[randomIndex]
-				return (
-					<Chip
-						key={'chip-' + index}
-						style={{ marginLeft: 5, marginTop: 5, color: randomColor }}
-						label={elem}
-						variant='outlined'
-						size='small'
-					/>
-				)
-			})}
-		</div>
-	)
-
-	const subtitlesFileLinks = (
-		<List>
-			<Grid container>
-				{captionTracks.map((elem, index) => {
-					const {
-						baseUrl,
-						languageCode,
-						name: { simpleText: label }
-					} = elem
-					return (
-						<Grid key={`subtitles-${label}-${index}`} item md={4} xs={6}>
-							<ListItem>
-								<ListItemAvatar>
-									<Avatar color='primary'>{languageCode}</Avatar>
-								</ListItemAvatar>
-								<a
-									href={`${baseUrl}&fmt=vtt`}
-									target='_blank'
-									rel='noopener noreferrer'
-								>
-									{label}
-								</a>
-							</ListItem>
-						</Grid>
-					)
-				})}
-			</Grid>
-		</List>
-	)
-
-	const subtitlesTracksForVideo = captionTracks.map((elem, index) => {
-		const {
-			baseUrl,
-			languageCode,
-			name: { simpleText: label }
-		} = elem
-		return (
-			// doesn't work because of 'crosorigin' problems
-			<track
-				key={`${label}-${index}`}
-				kind='captions'
-				src={`${baseUrl}&fmt=vtt`}
-				srcLang={languageCode}
-				label={label}
-			></track>
-		)
-	})
+	const headProps = { title, description, keywords, image: biggestThumbnailUrl }
 
 	return (
 		<div>
-			{header}
+			<Head {...headProps} />
 			<Container maxWidth='sm'>
 				<article>
 					<p />
@@ -125,16 +32,14 @@ const VideoPage = (props) => {
 						{title}
 					</Typography>
 					<p />
-					{keywordsBlock}
+					<Keywords keywords={keywords} />
 					<p />
-					<video controls src={urlVideo} style={{ width: '100%' }}>
-						{subtitlesTracksForVideo}
-					</video>
+					<Video captionTracks={captionTracks} urlVideo={urlVideo} />
 					<p />
 					<audio controls src={urlAudio} style={{ width: '100%' }} />
 					<p />
 					<Typography variant='subtitle1'> Available subtitles:</Typography>
-					{subtitlesFileLinks}
+					<SubtitleFileLinks captionTracks={captionTracks} />
 					<p />
 					<Typography style={{ whiteSpace: 'pre-line' }} variant='body2'>
 						{description}
