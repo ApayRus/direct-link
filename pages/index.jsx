@@ -1,7 +1,19 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Search from '../components/Search'
-import { Typography, Container } from '@material-ui/core'
+import {
+	Typography,
+	Container,
+	List,
+	ListItem,
+	ListItemIcon,
+	ListItemText
+} from '@material-ui/core'
+import {
+	Subtitles as SubtitlesIcon,
+	OndemandVideo as VideoIcon,
+	MusicVideo as AudioIcon
+} from '@material-ui/icons'
 
 export default function Home() {
 	return (
@@ -18,9 +30,26 @@ export default function Home() {
 						<Typography variant='h1' style={{ fontSize: 35 }}>
 							Direct links for Youtube's
 						</Typography>
-						<Typography variant='body1'>video</Typography>{' '}
-						<Typography variant='body1'>audio</Typography>
-						<Typography variant='body1'>subtitles</Typography>
+						<List style={{ display: 'flex', flexDirection: 'row' }}>
+							<ListItem style={{ flex: 1 }}>
+								<ListItemIcon>
+									<VideoIcon />
+								</ListItemIcon>
+								<ListItemText>video</ListItemText>
+							</ListItem>
+							<ListItem style={{ flex: 1 }}>
+								<ListItemIcon>
+									<AudioIcon />
+								</ListItemIcon>
+								<ListItemText>audio</ListItemText>
+							</ListItem>
+							<ListItem style={{ flex: 1 }}>
+								<ListItemIcon>
+									<SubtitlesIcon />
+								</ListItemIcon>
+								<ListItemText>subtitles</ListItemText>
+							</ListItem>
+						</List>
 					</div>
 					<p />
 					<Search />
