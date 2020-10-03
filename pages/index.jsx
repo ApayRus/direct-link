@@ -7,12 +7,14 @@ import {
 	List,
 	ListItem,
 	ListItemIcon,
-	ListItemText
+	ListItemText,
+	IconButton
 } from '@material-ui/core'
 import {
 	Subtitles as SubtitlesIcon,
 	OndemandVideo as VideoIcon,
-	MusicVideo as AudioIcon
+	MusicVideo as AudioIcon,
+	GitHub as GitHubIcon
 } from '@material-ui/icons'
 
 export default function Home() {
@@ -32,19 +34,19 @@ export default function Home() {
 						</Typography>
 						<List style={{ display: 'flex', flexDirection: 'row' }}>
 							<ListItem style={{ flex: 1 }}>
-								<ListItemIcon>
+								<ListItemIcon style={{ minWidth: 30 }}>
 									<VideoIcon />
 								</ListItemIcon>
 								<ListItemText>video</ListItemText>
 							</ListItem>
 							<ListItem style={{ flex: 1 }}>
-								<ListItemIcon>
+								<ListItemIcon style={{ minWidth: 30 }}>
 									<AudioIcon />
 								</ListItemIcon>
 								<ListItemText>audio</ListItemText>
 							</ListItem>
 							<ListItem style={{ flex: 1 }}>
-								<ListItemIcon>
+								<ListItemIcon style={{ minWidth: 30 }}>
 									<SubtitlesIcon />
 								</ListItemIcon>
 								<ListItemText>subtitles</ListItemText>
@@ -56,7 +58,7 @@ export default function Home() {
 					<p />
 					<div style={{ textAlign: 'center' }}>
 						<img
-							style={{ border: '1px solid skyblue' }}
+							style={{ border: '1px solid skyblue', width: '100%' }}
 							src='https://user-images.githubusercontent.com/1222611/92627876-a85ee000-f2d4-11ea-8dbb-14ab4eb0065a.png'
 						/>
 					</div>
@@ -64,14 +66,13 @@ export default function Home() {
 			</main>
 
 			<footer className={styles.footer}>
-				<a
-					href='https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
+				<IconButton
+					href='https://github.com/aparus/direct-link'
 					target='_blank'
 					rel='noopener noreferrer'
 				>
-					Powered by{' '}
-					<img src='/vercel.svg' alt='Vercel Logo' className={styles.logo} />
-				</a>
+					<GitHubIcon />{' '}
+				</IconButton>
 			</footer>
 		</div>
 	)
