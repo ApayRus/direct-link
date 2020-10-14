@@ -2,11 +2,12 @@ import { Container, Typography } from '@material-ui/core'
 import SubtitleFileLinks from '../../components/video/SubtitleFileLinks'
 import Keywords from '../../components/video/Keywords'
 import Video from '../../components/video/Video'
+import Thumbnails from '../../components/video/Thumbnails'
 import Search from '../../components/Search'
 import Head from '../../components/Head'
 import { getVideoInfo } from '../api/video/[videoId]'
 
-const VideoPage = (props) => {
+const VideoPage = props => {
 	const {
 		title,
 		description: { simpleText: description = '' },
@@ -38,12 +39,20 @@ const VideoPage = (props) => {
 					<p />
 					<audio controls src={urlAudio} style={{ width: '100%' }} />
 					<p />
-					<Typography variant='subtitle1'> Available subtitles:</Typography>
+					<Typography style={{ fontSize: 20 }} variant='h3'>
+						Available subtitles:
+					</Typography>
 					<SubtitleFileLinks captionTracks={captionTracks} />
 					<p />
 					<Typography style={{ whiteSpace: 'pre-line' }} variant='body2'>
 						{description}
 					</Typography>
+					<p />
+					<Typography style={{ fontSize: 20 }} variant='h3'>
+						Thumbnails:
+					</Typography>
+					<p />
+					<Thumbnails thumbnails={thumbnails} />
 					<p />
 				</article>
 			</Container>
