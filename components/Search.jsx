@@ -9,7 +9,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import ytdl from 'ytdl-core'
 import { useRouter } from 'next/router'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
 	root: {
 		padding: '2px 4px',
 		display: 'flex',
@@ -34,15 +34,16 @@ export default function CustomizedInputBase() {
 	const [url, setUrl] = useState('')
 	const router = useRouter()
 
-	const onSearchChange = (event) => {
+	const onSearchChange = event => {
 		setUrl(event.target.value)
 	}
 
-	const onSearchClear = (event) => {
+	const onSearchClear = event => {
 		setUrl('')
 	}
 
-	const onSearchClick = () => {
+	const onSubmit = e => {
+		e.preventDefault()
 		try {
 			const videoId = ytdl.getVideoID(url)
 			router.push(`/video/[videoId]`, `/video/${videoId}`)
@@ -52,11 +53,11 @@ export default function CustomizedInputBase() {
 	}
 
 	return (
-		<Paper component='form' className={classes.root}>
+		<Paper component='form' onSubmit={onSubmit} className={classes.root}>
 			<IconButton
 				className={classes.iconButton}
 				aria-label='search'
-				onClick={onSearchClick}
+				type='submit'
 			>
 				<SearchIcon />
 			</IconButton>
