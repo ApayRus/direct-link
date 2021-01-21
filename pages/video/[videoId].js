@@ -10,7 +10,7 @@ import { getVideoInfo } from '../api/video/[videoId]'
 const VideoPage = props => {
 	const {
 		title,
-		description: { simpleText: description = '' },
+		description = '',
 		keywords,
 		urlVideo,
 		urlAudio,
@@ -19,7 +19,7 @@ const VideoPage = props => {
 	} = props
 
 	const biggestThumbnailUrl = thumbnails[thumbnails.length - 1].url
-	const headProps = { title, description, keywords, image: biggestThumbnailUrl }
+	const headProps = { title, keywords, image: biggestThumbnailUrl }
 
 	return (
 		<div>
@@ -40,19 +40,23 @@ const VideoPage = props => {
 					<audio controls src={urlAudio} style={{ width: '100%' }} />
 					<p />
 					<Typography style={{ fontSize: 20 }} variant='h3'>
-						Available subtitles:
+						Captions/Subtitles:
 					</Typography>
 					<SubtitleFileLinks captionTracks={captionTracks} />
-					<p />
-					<Typography style={{ whiteSpace: 'pre-line' }} variant='body2'>
-						{description}
-					</Typography>
 					<p />
 					<Typography style={{ fontSize: 20 }} variant='h3'>
 						Thumbnails:
 					</Typography>
 					<p />
 					<Thumbnails thumbnails={thumbnails} />
+					<p />
+					<Typography style={{ fontSize: 20 }} variant='h3'>
+						Description:
+					</Typography>
+					<p />
+					<Typography style={{ whiteSpace: 'pre-line' }} variant='body2'>
+						{description}
+					</Typography>
 					<p />
 				</article>
 			</Container>
