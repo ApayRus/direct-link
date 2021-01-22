@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Video({ captionTracks, urlVideo }) {
+function Video({ captionTracks, urlVideo, poster }) {
 	const subtitlesTracksForVideo = captionTracks.map((elem, index) => {
 		const {
 			baseUrl,
@@ -20,7 +20,7 @@ function Video({ captionTracks, urlVideo }) {
 	})
 
 	return (
-		<video controls src={urlVideo} style={{ width: '100%' }}>
+		<video controls src={urlVideo} poster={poster} style={{ width: '100%' }}>
 			{subtitlesTracksForVideo}
 		</video>
 	)
