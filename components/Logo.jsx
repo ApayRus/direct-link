@@ -1,13 +1,15 @@
 import { makeStyles } from '@material-ui/core/styles'
+import Link from 'next/link'
 
 const useStyles = makeStyles(theme => ({
 	pointer: {
 		// width: 200,
 		height: 40,
 		position: 'relative',
-		background: 'red',
+		background: theme.palette.primary.main,
 		paddingLeft: 30,
 		paddingRight: 10,
+		marginRight: 20,
 
 		'&::after': {
 			content: '""',
@@ -27,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 			bottom: 0,
 			width: 0,
 			height: 0,
-			borderLeft: '20px solid red',
+			borderLeft: `20px solid ${theme.palette.primary.main}`,
 			borderTop: '20px solid transparent',
 			borderBottom: '20px solid transparent'
 		}
@@ -38,9 +40,11 @@ const Logo = ({ text }) => {
 	const classes = useStyles()
 
 	return (
-		<div style={{ display: 'inline-block' }}>
-			<div className={classes.pointer}>{text}</div>
-		</div>
+		<Link href='/'>
+			<div style={{ cursor: 'pointer', display: 'inline-block' }}>
+				<div className={classes.pointer}>{text}</div>
+			</div>
+		</Link>
 	)
 }
 
