@@ -1,6 +1,13 @@
 # Direct links (to youtube video, audio and subtitles)
 
-<img src="https://user-images.githubusercontent.com/1222611/92627876-a85ee000-f2d4-11ea-8dbb-14ab4eb0065a.png" align="right" hspace="10">A little youtube clone, that gets you access to `tags`, direct `video` and `audio` urls (.mp4), and all available `subtitles` (.vtt).
+<img src="https://user-images.githubusercontent.com/1222611/92627876-a85ee000-f2d4-11ea-8dbb-14ab4eb0065a.png" align="right" hspace="10">A downloader, that gets you access to direct links to youtube's:
+
+- `video` (mp4),
+- `audio` (m4a),
+- `captions/subtitles` (.vtt),
+- `thumbnails` (webp).
+
+---
 
 Based on [Next.js](https://nextjs.org/), [React.js](https://reactjs.org/), [Material-UI](https://material-ui.com/) and [Node-Ytdl-Core](https://github.com/fent/node-ytdl-core).
 
@@ -14,9 +21,10 @@ npm run dev
 ## Usage
 
 There is 3 routes:
-/api/all-info/videoId
-/api/video/videoId
-/video/videoId
+
+- /api/all-info/videoId
+- /api/video/videoId
+- /video/videoId
 
 ---
 
