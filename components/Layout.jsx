@@ -1,22 +1,8 @@
-import styles from '../styles/Home.module.css'
 import Search from '../components/Search'
 import Logo from './Logo'
-import {
-	Typography,
-	Container,
-	List,
-	ListItem,
-	ListItemIcon,
-	ListItemText,
-	IconButton
-} from '@material-ui/core'
-import {
-	Subtitles as SubtitlesIcon,
-	OndemandVideo as VideoIcon,
-	MusicVideo as AudioIcon,
-	Image as ThumbnailIcon,
-	GitHub as GitHubIcon
-} from '@material-ui/icons'
+import DescriptionIcons from './DescriptionIcons'
+import { Typography, Container, IconButton } from '@material-ui/core'
+import { GitHub as GitHubIcon } from '@material-ui/icons'
 
 import Head from './Head'
 
@@ -29,36 +15,18 @@ const Layout = ({ children, headProps = {} }) => {
 			<main>
 				<Container maxWidth='sm'>
 					<p />
-					<div style={{ textAlign: 'center' }}>
-						<Typography variant='h1' style={{ fontSize: 35 }}>
+					<div
+						style={{
+							textAlign: 'center'
+						}}
+					>
+						<Typography
+							variant='h1'
+							style={{ fontSize: 35, width: '100%', textAlign: 'center' }}
+						>
 							<Logo text='Direct links' /> for Youtube's
 						</Typography>
-						<List style={{ display: 'flex', flexDirection: 'row' }}>
-							<ListItem style={{ flex: 1 }}>
-								<ListItemIcon style={{ minWidth: 30 }}>
-									<VideoIcon />
-								</ListItemIcon>
-								<ListItemText>video</ListItemText>
-							</ListItem>
-							<ListItem style={{ flex: 1 }}>
-								<ListItemIcon style={{ minWidth: 30 }}>
-									<AudioIcon />
-								</ListItemIcon>
-								<ListItemText>audio</ListItemText>
-							</ListItem>
-							<ListItem style={{ flex: 1 }}>
-								<ListItemIcon style={{ minWidth: 30 }}>
-									<SubtitlesIcon />
-								</ListItemIcon>
-								<ListItemText>subtitles</ListItemText>
-							</ListItem>
-							<ListItem style={{ flex: 1 }}>
-								<ListItemIcon style={{ minWidth: 30 }}>
-									<ThumbnailIcon />
-								</ListItemIcon>
-								<ListItemText>thumbnails</ListItemText>
-							</ListItem>
-						</List>
+						<DescriptionIcons />
 					</div>
 					<p />
 					<Search />
@@ -67,7 +35,14 @@ const Layout = ({ children, headProps = {} }) => {
 				</Container>
 			</main>
 
-			<footer className={styles.footer}>
+			<footer
+				style={{
+					// position: 'absolute',
+					bottom: 10,
+					width: '100%',
+					textAlign: 'center'
+				}}
+			>
 				<IconButton
 					href='https://github.com/aparus/direct-link'
 					target='_blank'
