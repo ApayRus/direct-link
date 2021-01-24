@@ -1,8 +1,8 @@
 import Search from '../components/Search'
 import Logo from './Logo'
 import DescriptionIcons from './DescriptionIcons'
-import { Typography, Container, IconButton } from '@material-ui/core'
-import { GitHub as GitHubIcon } from '@material-ui/icons'
+import { Typography, Container } from '@material-ui/core'
+import Footer from './Footer'
 
 import Head from './Head'
 
@@ -12,45 +12,28 @@ const Layout = ({ children, headProps = {} }) => {
 			{/* meta props */}
 			<Head {...headProps} />
 
-			<main>
-				<Container maxWidth='sm'>
-					<p />
-					<div
-						style={{
-							textAlign: 'center'
-						}}
-					>
-						<Typography
-							variant='h1'
-							style={{ fontSize: 35, width: '100%', textAlign: 'center' }}
-						>
-							<Logo text='Direct links' /> for Youtube's
-						</Typography>
-						<DescriptionIcons />
-					</div>
-					<p />
-					<Search />
-					<p />
-					{children}
-				</Container>
-			</main>
-
-			<footer
+			<Container
+				maxWidth='sm'
 				style={{
-					// position: 'absolute',
-					bottom: 10,
-					width: '100%',
-					textAlign: 'center'
+					display: 'flex',
+					flexDirection: 'column',
+					height: '100vh',
+					alignItems: 'center'
 				}}
 			>
-				<IconButton
-					href='https://github.com/aparus/direct-link'
-					target='_blank'
-					rel='noopener noreferrer'
-				>
-					<GitHubIcon />{' '}
-				</IconButton>
-			</footer>
+				<heading style={{ flex: 1, marginTop: 10 }}>
+					<Typography
+						variant='h1'
+						style={{ fontSize: 35, width: '100%', textAlign: 'center' }}
+					>
+						<Logo text='Direct links' /> for Youtube's
+					</Typography>
+					<DescriptionIcons />
+					<Search />
+				</heading>
+				<main>{children}</main>
+				<Footer />
+			</Container>
 		</div>
 	)
 }

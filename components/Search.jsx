@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import Paper from '@material-ui/core/Paper'
 import InputBase from '@material-ui/core/InputBase'
 import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
@@ -11,11 +10,14 @@ import ytdl from 'ytdl-core'
 import { useRouter } from 'next/router'
 
 const useStyles = makeStyles(theme => ({
-	root: {
+	form: {
 		padding: '2px 4px',
 		display: 'flex',
 		alignItems: 'center',
-		width: '100%'
+		width: '100%',
+		border: `1px solid ${theme.palette.grey[500]}`,
+		borderRadius: 15,
+		marginTop: 5
 	},
 	input: {
 		marginLeft: theme.spacing(1),
@@ -108,10 +110,8 @@ export default function CustomizedInputBase() {
 	)
 
 	return (
-		<div>
-			<Paper component='form' onSubmit={onSubmit} className={classes.root}>
-				{isLoading ? <LoadingIndicator /> : <SearchInput />}
-			</Paper>
-		</div>
+		<form onSubmit={onSubmit} className={classes.form}>
+			{isLoading ? <LoadingIndicator /> : <SearchInput />}
+		</form>
 	)
 }

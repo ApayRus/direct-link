@@ -16,9 +16,8 @@ const VideoArticle = props => {
 		image: poster
 	} = props
 	return (
-		<article>
-			<p />
-			<Typography style={{ fontSize: 30 }} variant='h1'>
+		<article style={{ marginTop: 30 }}>
+			<Typography style={{ fontSize: 40, textAlign: 'center' }} variant='h1'>
 				{title}
 			</Typography>
 			<p />
