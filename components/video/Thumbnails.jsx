@@ -2,7 +2,7 @@ import React from 'react'
 
 function Thumbnails({ thumbnails }) {
 	return (
-		<div style={{ display: 'flex' }}>
+		<div style={{ display: 'flex', flexWrap: 'wrap' }}>
 			{thumbnails.map((elem, index) => {
 				const { width, height, url } = elem
 				return (

@@ -47,7 +47,10 @@ const VideoArticle = props => {
 				Description:
 			</Typography>
 			<p />
-			<Typography style={{ whiteSpace: 'pre-line' }} variant='body2'>
+			<Typography
+				style={{ whiteSpace: 'pre-line', overflowWrap: 'break-word' }}
+				variant='body2'
+			>
 				{description}
 			</Typography>
 			<p />
