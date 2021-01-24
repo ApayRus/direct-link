@@ -1,9 +1,6 @@
-import Search from '../components/Search'
-import Logo from './Logo'
-import DescriptionIcons from './DescriptionIcons'
-import { Typography, Container } from '@material-ui/core'
+import { Container } from '@material-ui/core'
+import Heading from './Heading'
 import Footer from './Footer'
-
 import Head from './Head'
 
 const Layout = ({ children, headProps = {} }) => {
@@ -21,16 +18,7 @@ const Layout = ({ children, headProps = {} }) => {
 					alignItems: 'center'
 				}}
 			>
-				<heading style={{ flex: 1, marginTop: 10 }}>
-					<Typography
-						variant='h1'
-						style={{ fontSize: 35, width: '100%', textAlign: 'center' }}
-					>
-						<Logo text='Direct links' /> for Youtube's
-					</Typography>
-					<DescriptionIcons />
-					<Search />
-				</heading>
+				<Heading />
 				<main>{children}</main>
 				<Footer />
 			</Container>
