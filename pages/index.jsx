@@ -11,14 +11,5 @@ export default function Home() {
 			'https://user-images.githubusercontent.com/1222611/92627876-a85ee000-f2d4-11ea-8dbb-14ab4eb0065a.png'
 	}
 
-	return (
-		<Layout headProps={headProps}>
-			<div style={{ textAlign: 'center' }}>
-				<img
-					style={{ border: '1px solid skyblue', width: '100%' }}
-					src={headProps.image}
-				/>
-			</div>
-		</Layout>
-	)
+	return <Layout headProps={headProps}></Layout>
 }
