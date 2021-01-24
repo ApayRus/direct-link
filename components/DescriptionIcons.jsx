@@ -18,10 +18,10 @@ const useStyles = makeStyles(theme => ({
 	itemContainer: {
 		display: 'flex',
 		flexDirection: 'row',
-		justifyContent: 'center'
-		/* 		[theme.breakpoints.down('xs')]: {
-			width: '50%'
-		} */
+		justifyContent: 'center',
+		[theme.breakpoints.down('xs')]: {
+			width: '34%'
+		}
 	},
 	iconContainer: {
 		flex: 1,
