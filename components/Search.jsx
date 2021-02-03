@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import InputBase from '@material-ui/core/InputBase'
-import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import ClearIcon from '@material-ui/icons/Clear'
 import EnterIcon from '@material-ui/icons/ChangeHistory'
@@ -33,7 +32,6 @@ const useStyles = makeStyles(theme => ({
 	},
 	loadingProgressContainer: {
 		textAlign: 'center',
-		// marginTop: 10,
 		width: '100%'
 	}
 }))
@@ -83,29 +81,19 @@ export default function CustomizedInputBase() {
 	)
 
 	const EnterButton = () => (
-		<IconButton
-			// className={classes.iconButton}
-			aria-label='search'
-			type='submit'
-		>
+		<IconButton aria-label='search' type='submit'>
 			<EnterIcon color='primary' style={{ transform: 'rotate(90deg)' }} />
 		</IconButton>
 	)
 
 	const ClearButton = () => (
-		<IconButton
-			// className={classes.iconButton}
-			aria-label='clear'
-			onClick={onSearchClear}
-			// size='small'
-		>
+		<IconButton aria-label='clear' onClick={onSearchClear}>
 			<ClearIcon style={{ fontSize: 18 }} />
 		</IconButton>
 	)
 
 	const SearchInput = () => (
 		<>
-			{' '}
 			<InputBase
 				className={classes.input}
 				placeholder='Paste here link or id of video'
@@ -113,9 +101,7 @@ export default function CustomizedInputBase() {
 				onChange={onSearchChange}
 				value={url}
 			/>
-			{/* <Divider className={classes.divider} orientation='vertical' /> */}
 			<ClearButton />
-			{/* <Divider className={classes.divider} orientation='vertical' /> */}
 			<EnterButton />
 		</>
 	)
