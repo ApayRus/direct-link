@@ -4,7 +4,7 @@ import InputBase from '@material-ui/core/InputBase'
 import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import ClearIcon from '@material-ui/icons/Clear'
-import SearchIcon from '@material-ui/icons/Search'
+import EnterIcon from '@material-ui/icons/ChangeHistory'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import ytdl from 'ytdl-core'
 import { useRouter } from 'next/router'
@@ -17,7 +17,8 @@ const useStyles = makeStyles(theme => ({
 		width: '100%',
 		border: `1px solid ${theme.palette.grey[500]}`,
 		borderRadius: 15,
-		marginTop: 5
+		marginTop: 5,
+		minHeight: 48
 	},
 	input: {
 		marginLeft: theme.spacing(1),
@@ -32,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	loadingProgressContainer: {
 		textAlign: 'center',
-		marginTop: 10,
+		// marginTop: 10,
 		width: '100%'
 	}
 }))
@@ -47,7 +48,7 @@ export default function CustomizedInputBase() {
 		setUrl(event.target.value)
 	}
 
-	const onSearchClear = event => {
+	const onSearchClear = () => {
 		setUrl('')
 	}
 
@@ -81,16 +82,30 @@ export default function CustomizedInputBase() {
 		</div>
 	)
 
+	const EnterButton = () => (
+		<IconButton
+			// className={classes.iconButton}
+			aria-label='search'
+			type='submit'
+		>
+			<EnterIcon color='primary' style={{ transform: 'rotate(90deg)' }} />
+		</IconButton>
+	)
+
+	const ClearButton = () => (
+		<IconButton
+			// className={classes.iconButton}
+			aria-label='clear'
+			onClick={onSearchClear}
+			// size='small'
+		>
+			<ClearIcon style={{ fontSize: 18 }} />
+		</IconButton>
+	)
+
 	const SearchInput = () => (
 		<>
 			{' '}
-			<IconButton
-				className={classes.iconButton}
-				aria-label='search'
-				type='submit'
-			>
-				<SearchIcon />
-			</IconButton>
 			<InputBase
 				className={classes.input}
 				placeholder='Paste here link or id of video'
@@ -98,14 +113,10 @@ export default function CustomizedInputBase() {
 				onChange={onSearchChange}
 				value={url}
 			/>
-			<Divider className={classes.divider} orientation='vertical' />
-			<IconButton
-				className={classes.iconButton}
-				aria-label='clear'
-				onClick={onSearchClear}
-			>
-				<ClearIcon />
-			</IconButton>
+			{/* <Divider className={classes.divider} orientation='vertical' /> */}
+			<ClearButton />
+			{/* <Divider className={classes.divider} orientation='vertical' /> */}
+			<EnterButton />
 		</>
 	)
 
