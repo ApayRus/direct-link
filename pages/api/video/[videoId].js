@@ -1,5 +1,9 @@
 import ytdl from 'ytdl-core'
 
+// import httpsProxyAgent from 'https-proxy-agent'
+// const proxy = 'https://208.81.193.205:80' // US free proxy from https://www.us-proxy.org/
+// const agent = httpsProxyAgent(proxy)
+
 // for public api
 export default async (req, res) => {
 	const {
@@ -11,7 +15,9 @@ export default async (req, res) => {
 
 // for use on this server, instead of fetch
 export async function getVideoInfo(videoId) {
-	let info = await ytdl.getInfo(videoId)
+	let info = await ytdl.getInfo(videoId, {
+		requestOptions: { 'X-Forwarded-For': '54.37.1.193' /* agent  */ }
+	})
 	const { url: urlVideo } = info.formats.find(elem => elem.itag === 18)
 	const { url: urlAudio } = info.formats.find(elem => elem.itag === 140)
 	const {
