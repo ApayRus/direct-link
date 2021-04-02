@@ -5,7 +5,7 @@ import { Typography } from '@material-ui/core'
 
 const Heading = () => {
 	return (
-		<heading style={{ flex: 1, width: '100%', marginTop: 10 }}>
+		<header style={{ flex: 1, width: '100%', marginTop: 10 }}>
 			<Typography
 				variant='h1'
 				style={{ fontSize: 35, width: '100%', textAlign: 'center' }}
@@ -14,7 +14,7 @@ const Heading = () => {
 			</Typography>
 			<DescriptionIcons />
 			<Search />
-		</heading>
+		</header>
 	)
 }
 
