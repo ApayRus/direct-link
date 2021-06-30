@@ -96,7 +96,7 @@ export default function CustomizedInputBase() {
 		<>
 			<InputBase
 				className={classes.input}
-				placeholder='Paste here link or id of video'
+				placeholder='Paste here id of video'
 				inputProps={{ 'aria-label': 'get video id' }}
 				onChange={onSearchChange}
 				value={url}
