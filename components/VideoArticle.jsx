@@ -3,8 +3,9 @@ import SubtitleFileLinks from './video/SubtitleFileLinks'
 import Keywords from './video/Keywords'
 import Video from './video/Video'
 import Thumbnails from './video/Thumbnails'
+import ShowingModeSwitcher from './DisplayModeSwitcher'
 
-const VideoArticle = props => {
+const VideoInfo = props => {
 	const {
 		title,
 		keywords,
@@ -13,35 +14,66 @@ const VideoArticle = props => {
 		urlAudio,
 		thumbnails,
 		description,
-		image: poster
+		image: poster,
+		setDisplayMode,
+		displayMode,
+		captions,
+		loadCaptions,
+		selectedLangs,
+		selectLang
 	} = props
-	return (
-		<article style={{ marginTop: 30 }}>
+
+	const titleBlock = (
+		<div style={styles.block}>
 			<Typography style={{ fontSize: 40, textAlign: 'center' }} variant='h1'>
 				{title}
 			</Typography>
-			<p />
+		</div>
+	)
+
+	const keywordsBlock = (
+		<div style={styles.block}>
 			<Keywords keywords={keywords} />
-			<p />
-			<Video
-				captionTracks={captionTracks}
-				urlVideo={urlVideo}
-				poster={poster}
-			/>
-			<p />
+		</div>
+	)
+
+	const videoBlock = (
+		<Video captionTracks={captionTracks} urlVideo={urlVideo} poster={poster} />
+	)
+
+	const audioBlock = (
+		<div style={styles.block}>
 			<audio controls src={urlAudio} style={{ width: '100%' }} />
-			<p />
+		</div>
+	)
+
+	const captionsBlock = (
+		<div style={styles.block}>
 			<Typography style={{ fontSize: 20 }} variant='h3'>
 				Captions/Subtitles:
 			</Typography>
-			<SubtitleFileLinks captionTracks={captionTracks} />
+			<SubtitleFileLinks
+				captionTracks={captionTracks}
+				loadCaptions={loadCaptions}
+				selectedLangs={selectedLangs}
+				selectLang={selectLang}
+			/>
 			<p />
+		</div>
+	)
+
+	const thumbnailsBlock = (
+		<div style={styles.block}>
 			<Typography style={{ fontSize: 20 }} variant='h3'>
 				Thumbnails:
 			</Typography>
 			<p />
 			<Thumbnails thumbnails={thumbnails} />
-			<p />
+		</div>
+	)
+
+	const descriptionBlock = (
+		<div style={styles.block}>
 			<Typography style={{ fontSize: 20 }} variant='h3'>
 				Description:
 			</Typography>
@@ -52,9 +84,38 @@ const VideoArticle = props => {
 			>
 				{description}
 			</Typography>
-			<p />
-		</article>
+		</div>
+	)
+
+	const transcriptBlock = (
+		<pre style={{ maxWidth: 360 }}>
+			xxx{/* {JSON.stringify(captions, null, 2)} */}
+		</pre>
+	)
+
+	return (
+		<>
+			<article>
+				{displayMode === 'info' && titleBlock}
+				{displayMode === 'info' && keywordsBlock}
+				{videoBlock}
+				<ShowingModeSwitcher
+					displayMode={displayMode}
+					setDisplayMode={setDisplayMode}
+				/>
+				{displayMode === 'transcript' && transcriptBlock}
+				{JSON.stringify(selectedLangs)}
+				{displayMode === 'info' && audioBlock}
+				{displayMode === 'info' && captionsBlock}
+				{displayMode === 'info' && thumbnailsBlock}
+				{displayMode === 'info' && descriptionBlock}
+			</article>
+		</>
 	)
 }
 
-export default VideoArticle
+const styles = {
+	block: { marginBottom: 10, marginTop: 10 }
+}
+
+export default VideoInfo

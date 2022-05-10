@@ -3,14 +3,14 @@ import Heading from './Heading'
 import Footer from './Footer'
 import Head from './Head'
 
-const Layout = ({ children, headProps = {} }) => {
+const Layout = ({ children, headProps = {}, displayMode = 'info' }) => {
 	return (
 		<div>
 			{/* meta props */}
 			<Head {...headProps} />
 
 			<Container
-				maxWidth='sm'
+				maxWidth={displayMode === 'info' ? 'sm' : 'xs'}
 				style={{
 					display: 'flex',
 					flexDirection: 'column',
@@ -18,9 +18,9 @@ const Layout = ({ children, headProps = {} }) => {
 					alignItems: 'center'
 				}}
 			>
-				<Heading />
+				{displayMode === 'info' && <Heading />}
 				<main>{children}</main>
-				<Footer />
+				{displayMode === 'info' && <Footer />}
 			</Container>
 		</div>
 	)
