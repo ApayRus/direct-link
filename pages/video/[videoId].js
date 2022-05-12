@@ -62,6 +62,7 @@ const VideoPage = props => {
 
 	const biggestThumbnailUrl = thumbnails[thumbnails.length - 1].url
 	const headProps = { title, keywords, image: biggestThumbnailUrl, description }
+
 	const videoArticleProps = {
 		...headProps,
 		captionTracks,
@@ -71,6 +72,7 @@ const VideoPage = props => {
 		displayMode,
 		setDisplayMode,
 		captions,
+		setCaptions,
 		loadCaptions,
 		selectedLangs,
 		selectLang

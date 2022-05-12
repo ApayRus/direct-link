@@ -23,6 +23,12 @@ const DisplayModeSwitcher = props => {
 				>
 					Transcript
 				</Button>
+				<Button
+					variant={displayMode === 'edit' ? 'contained' : 'outlined'}
+					onClick={() => setDisplayMode('edit')}
+				>
+					Edit
+				</Button>
 			</ButtonGroup>
 		</nav>
 	)

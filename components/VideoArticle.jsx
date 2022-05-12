@@ -1,10 +1,11 @@
-import { Typography } from '@material-ui/core'
+import { TextareaAutosize, Typography } from '@material-ui/core'
 import SubtitleFileLinks from './video/SubtitleFileLinks'
 import Keywords from './video/Keywords'
 import Video from './video/Video'
 import Thumbnails from './video/Thumbnails'
 import ShowingModeSwitcher from './DisplayModeSwitcher'
 import Phrases from './video/Phrases'
+import { parseSubs } from 'frazy-parser'
 
 const VideoInfo = props => {
 	const {
@@ -19,6 +20,7 @@ const VideoInfo = props => {
 		setDisplayMode,
 		displayMode,
 		captions,
+		setCaptions,
 		loadCaptions,
 		selectedLangs,
 		selectLang
@@ -91,6 +93,24 @@ const VideoInfo = props => {
 	const transcriptBlock = (
 		<Phrases selectedLangs={selectedLangs} captions={captions} />
 	)
+
+	const editBlock = (
+		<TextareaAutosize
+			style={{ width: '100%' }}
+			defaultValue={captions[selectedLangs?.[0]]?.text}
+			onBlur={event => {
+				const {
+					target: { value: text }
+				} = event
+				const [langCode] = selectedLangs
+				const phrases = parseSubs(text)
+
+				setCaptions(oldState => ({
+					...oldState,
+					[langCode]: { text, phrases }
+				}))
+			}}
+		/>
 	)
 
 	return (
@@ -107,15 +127,17 @@ const VideoInfo = props => {
 							zIndex: 1
 						}}
 					>
-				{videoBlock}
+						{videoBlock}
 					</div>
 					<div style={styles.block}>
-				<ShowingModeSwitcher
-					displayMode={displayMode}
-					setDisplayMode={setDisplayMode}
-				/>
+						<ShowingModeSwitcher
+							displayMode={displayMode}
+							setDisplayMode={setDisplayMode}
+						/>
 					</div>
 					{displayMode === 'transcript' && <div>{transcriptBlock}</div>}
+					{displayMode === 'edit' && <div>{editBlock}</div>}
+				</div>
 				{displayMode === 'info' && audioBlock}
 				{displayMode === 'info' && captionsBlock}
 				{displayMode === 'info' && thumbnailsBlock}
