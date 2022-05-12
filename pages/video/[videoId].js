@@ -27,12 +27,20 @@ const VideoPage = props => {
 			elem => elem.languageCode === languageCode
 		)
 		if (captionTrack) {
-			const { baseUrl } = captionTrack
+			const {
+				baseUrl,
+				name: { simpleText: label }
+			} = captionTrack
+
+			const langCode = label.includes('auto')
+				? languageCode + '-auto'
+				: languageCode
+
 			fetch(`${baseUrl}&fmt=vtt`).then(response => {
 				response.text().then(text => {
 					setCaptions(oldState => ({
 						...oldState,
-						[languageCode]: { text, phrases: parseSubs(text) }
+						[langCode]: { text, phrases: parseSubs(text) }
 					}))
 				})
 			})

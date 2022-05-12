@@ -28,8 +28,12 @@ function SubtitleFileLinks(props) {
 						name: { simpleText: label }
 					} = elem
 
+					const langCode = label.includes('auto')
+						? languageCode + '-auto'
+						: languageCode // we need auto to avoid double select by similar code
+
 					const langIndex =
-						selectedLangs.findIndex(elem => elem === languageCode) + 1 || 0
+						selectedLangs.findIndex(elem => elem === langCode) + 1 || 0
 
 					return (
 						<Grid key={`subtitles-${label}-${index}`} item md={4} xs={6}>
@@ -37,16 +41,16 @@ function SubtitleFileLinks(props) {
 								<ListItemAvatar>
 									{langIndex ? (
 										<Badge badgeContent={langIndex} color='primary'>
-											<Avatar onClick={langAvatarClickHandler(languageCode)}>
-												{languageCode}
+											<Avatar onClick={langAvatarClickHandler(langCode)}>
+												{langCode}
 											</Avatar>
 										</Badge>
 									) : (
 										<Avatar
-											onClick={langAvatarClickHandler(languageCode)}
+											onClick={langAvatarClickHandler(langCode)}
 											color='primary'
 										>
-											{languageCode}
+											{langCode}
 										</Avatar>
 									)}
 								</ListItemAvatar>
