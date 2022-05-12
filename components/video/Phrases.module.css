@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css?family=Scheherazade+New');
+
+.root {
+}
+
+.phraseContainer {
+	/* border-bottom: 1px grey solid; */
+	padding-top: 0.5rem;
+	position: relative;
+	padding-bottom: 0.5rem;
+}
+
+.langCode {
+	font-size: 0.7rem;
+	color: silver;
+	display: inline-block;
+}
+
+.phraseSingleLang {
+	/* white-space: pre-line; */
+}
+
+.firstLang {
+	font-size: 120%;
+}
+
+.middleLang {
+	/* padding-left: 1rem; */
+	/* border-bottom: 1px solid lightgrey; */
+	color: grey;
+}
+
+.lastLang {
+	/* padding-left: 1rem; */
+	color: grey;
+}
+
+.cueText {
+	display: inline-block;
+}
+
+.ar {
+	font-family: 'Scheherazade New';
+	direction: rtl;
+	/* text-align: left; */
+	/* font-weight: bold; */
+	/* display: inline-block; */
+}
+
+.playButton {
+	font-size: 0.7rem;
+	color: silver;
+	display: flex;
+	align-items: center;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}

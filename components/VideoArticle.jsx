@@ -4,6 +4,7 @@ import Keywords from './video/Keywords'
 import Video from './video/Video'
 import Thumbnails from './video/Thumbnails'
 import ShowingModeSwitcher from './DisplayModeSwitcher'
+import Phrases from './video/Phrases'
 
 const VideoInfo = props => {
 	const {
@@ -88,9 +89,8 @@ const VideoInfo = props => {
 	)
 
 	const transcriptBlock = (
-		<pre style={{ maxWidth: 360 }}>
-			xxx{/* {JSON.stringify(captions, null, 2)} */}
-		</pre>
+		<Phrases selectedLangs={selectedLangs} captions={captions} />
+	)
 	)
 
 	return (
