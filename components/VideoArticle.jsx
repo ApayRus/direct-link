@@ -98,13 +98,24 @@ const VideoInfo = props => {
 			<article>
 				{displayMode === 'info' && titleBlock}
 				{displayMode === 'info' && keywordsBlock}
+
+				<div>
+					<div
+						style={{
+							position: displayMode === 'transcript' ? 'sticky' : 'unset',
+							top: 0,
+							zIndex: 1
+						}}
+					>
 				{videoBlock}
+					</div>
+					<div style={styles.block}>
 				<ShowingModeSwitcher
 					displayMode={displayMode}
 					setDisplayMode={setDisplayMode}
 				/>
-				{displayMode === 'transcript' && transcriptBlock}
-				{JSON.stringify(selectedLangs)}
+					</div>
+					{displayMode === 'transcript' && <div>{transcriptBlock}</div>}
 				{displayMode === 'info' && audioBlock}
 				{displayMode === 'info' && captionsBlock}
 				{displayMode === 'info' && thumbnailsBlock}
