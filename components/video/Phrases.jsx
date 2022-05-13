@@ -31,8 +31,8 @@ const Phrases = props => {
 									}`}
 									key={phrase?.id}
 								>
+									<div className={styles.langCode}>{lang}&nbsp;</div>
 									<div className={`${styles.cueText} ${styles[lang] || ''}`}>
-										<span className={styles.langCode}>{lang}&nbsp;</span>
 										{phrase?.body?.[0]?.text}
 									</div>
 								</div>

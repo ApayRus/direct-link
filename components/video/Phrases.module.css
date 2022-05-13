@@ -36,12 +36,13 @@
 }
 
 .cueText {
-	display: inline-block;
+	display: inline;
 }
 
 .ar {
 	font-family: 'Scheherazade New';
 	direction: rtl;
+	unicode-bidi: bidi-override;
 	/* text-align: left; */
 	/* font-weight: bold; */
 	/* display: inline-block; */
