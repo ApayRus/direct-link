@@ -1,5 +1,5 @@
 import { TextareaAutosize, Typography } from '@material-ui/core'
-import SubtitleFileLinks from './video/SubtitleFileLinks'
+import CaptionList from './CaptionList'
 import Keywords from './video/Keywords'
 import Video from './video/Video'
 import Thumbnails from './video/Thumbnails'
@@ -56,7 +56,7 @@ const VideoInfo = props => {
 			<Typography style={{ fontSize: 20 }} variant='h3'>
 				Captions/Subtitles:
 			</Typography>
-			<SubtitleFileLinks
+			<CaptionList
 				captionTracks={captionTracks}
 				loadCaptions={loadCaptions}
 				selectedLangs={selectedLangs}
