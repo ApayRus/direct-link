@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { getVideoInfo } from '../api/video/[videoId]'
 import VideoArticle from '../../components/VideoArticle'
-import { parseSubs } from 'frazy-parser'
-
 import Layout from '../../components/Layout'
+import useCaptions from '../../components/useCaptions'
 
 const VideoPage = props => {
 	const {
@@ -12,53 +11,20 @@ const VideoPage = props => {
 		keywords,
 		urlVideo,
 		urlAudio,
-		captionTracks,
+		captionTracks: captionTracksYoutube,
 		thumbnails
 	} = props
 
+	const {
+		captionTracks,
+		captions,
+		setCaptions,
+		loadCaptions,
+		selectedLangs,
+		selectLang
+	} = useCaptions(captionTracksYoutube)
+
 	const [displayMode, setDisplayMode] = useState('info') // | transcript
-
-	const [captions, setCaptions] = useState({})
-
-	const [selectedLangs, setSelectedLangs] = useState([])
-
-	const loadCaptions = languageCode => {
-		const captionTrack = captionTracks.find(
-			elem => elem.languageCode === languageCode
-		)
-		if (captionTrack) {
-			const {
-				baseUrl,
-				name: { simpleText: label }
-			} = captionTrack
-
-			const langCode = label.includes('auto')
-				? languageCode + '-auto'
-				: languageCode
-
-			fetch(`${baseUrl}&fmt=vtt`).then(response => {
-				response.text().then(text => {
-					setCaptions(oldState => ({
-						...oldState,
-						[langCode]: { text, phrases: parseSubs(text) }
-					}))
-				})
-			})
-		}
-	}
-
-	const selectLang = languageCode => {
-		// unselect
-		if (selectedLangs.includes(languageCode)) {
-			setSelectedLangs(oldState =>
-				oldState.filter(elem => elem !== languageCode)
-			)
-		}
-		// select
-		else {
-			setSelectedLangs(oldState => [...oldState, languageCode])
-		}
-	}
 
 	const biggestThumbnailUrl = thumbnails[thumbnails.length - 1].url
 	const headProps = { title, keywords, image: biggestThumbnailUrl, description }
