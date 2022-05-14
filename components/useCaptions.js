@@ -9,12 +9,18 @@ export default function useCaptions(captionTracksYoutube) {
 		captionTracksYoutube.map(track => {
 			const {
 				name: { simpleText: languageName },
+				languageCode,
 				...restTrack
 			} = track
+
+			const langCode = languageName.includes('auto')
+				? languageCode + '-auto'
+				: languageCode // we need auto-prefix to avoid double select by similar code
 
 			return {
 				...restTrack,
 				languageName,
+				languageCode: langCode,
 				source: 'youtube'
 			}
 		})
@@ -29,14 +35,7 @@ export default function useCaptions(captionTracksYoutube) {
 			elem => elem.languageCode === languageCode
 		)
 		if (captionTrack) {
-			const {
-				baseUrl,
-				name: { simpleText: label }
-			} = captionTrack
-
-			const langCode = label.includes('auto')
-				? languageCode + '-auto'
-				: languageCode
+			const { baseUrl, languageCode } = captionTrack
 
 			fetch(`${baseUrl}&fmt=vtt`).then(response => {
 				response.text().then(text => {
@@ -44,7 +43,7 @@ export default function useCaptions(captionTracksYoutube) {
 						const phrases = parseSubs(text)
 						return {
 							...oldState,
-							[langCode]: { text, phrases }
+							[languageCode]: { text, phrases }
 						}
 					})
 				})
