@@ -9,9 +9,16 @@ import {
 	Typography,
 	Link
 } from '@material-ui/core'
+import AddCaptionForm from '../AddCaptionsForm'
 
 function SubtitleFileLinks(props) {
-	const { captionTracks, loadCaptions, selectedLangs, selectLang } = props
+	const {
+		captionTracks,
+		loadCaptions,
+		selectedLangs,
+		selectLang,
+		addCaptions
+	} = props
 
 	const langAvatarClickHandler = languageCode => () => {
 		loadCaptions(languageCode)
@@ -19,56 +26,61 @@ function SubtitleFileLinks(props) {
 	}
 
 	return (
-		<List>
-			<Grid container>
-				{captionTracks.map((elem, index) => {
-					const { baseUrl, languageCode, languageName } = elem
+		<>
+			<List>
+				<Grid container>
+					{captionTracks.map((elem, index) => {
+						const { baseUrl, languageCode, languageName } = elem
 
-					const langIndex =
+						const langIndex =
 							selectedLangs.findIndex(elem => elem === languageCode) + 1 || 0
 
-					return (
+						return (
 							<Grid
 								key={`subtitles-${languageCode}-${index}`}
 								item
 								md={4}
 								xs={6}
 							>
-							<ListItem>
-								<ListItemAvatar>
-									{langIndex ? (
-										<Badge badgeContent={langIndex} color='primary'>
+								<ListItem>
+									<ListItemAvatar>
+										{langIndex ? (
+											<Badge badgeContent={langIndex} color='primary'>
 												<Avatar onClick={langAvatarClickHandler(languageCode)}>
 													{languageCode}
-											</Avatar>
-										</Badge>
-									) : (
-										<Avatar
+												</Avatar>
+											</Badge>
+										) : (
+											<Avatar
 												onClick={langAvatarClickHandler(languageCode)}
-											color='primary'
-										>
+												color='primary'
+											>
 												{languageCode}
-										</Avatar>
-									)}
-								</ListItemAvatar>
-								<Link
-									href={`${baseUrl}&fmt=vtt`}
-									target='_blank'
-									rel='noopener noreferrer'
-								>
-									<Typography
-										style={{ color: 'grey', cursor: 'pointer' }}
-										variant='body1'
+											</Avatar>
+										)}
+									</ListItemAvatar>
+									<Link
+										href={`${baseUrl}&fmt=vtt`}
+										target='_blank'
+										rel='noopener noreferrer'
 									>
-										{languageName}
-									</Typography>
-								</Link>
-							</ListItem>
-						</Grid>
-					)
-				})}
-			</Grid>
-		</List>
+										<Typography
+											style={{ color: 'grey', cursor: 'pointer' }}
+											variant='body1'
+										>
+											{languageName}
+										</Typography>
+									</Link>
+								</ListItem>
+							</Grid>
+						)
+					})}
+				</Grid>
+			</List>
+			<div>
+				<AddCaptionForm addCaptions={addCaptions} />
+			</div>
+		</>
 	)
 }
 

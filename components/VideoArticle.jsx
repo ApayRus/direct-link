@@ -23,7 +23,8 @@ const VideoInfo = props => {
 		setCaptions,
 		loadCaptions,
 		selectedLangs,
-		selectLang
+		selectLang,
+		addCaptions
 	} = props
 
 	const titleBlock = (
@@ -60,6 +61,7 @@ const VideoInfo = props => {
 				loadCaptions={loadCaptions}
 				selectedLangs={selectedLangs}
 				selectLang={selectLang}
+				addCaptions={addCaptions}
 			/>
 			<p />
 		</div>

@@ -21,7 +21,7 @@ export default function useCaptions(captionTracksYoutube) {
 				...restTrack,
 				languageName,
 				languageCode: langCode,
-				source: 'youtube'
+				sources: ['youtube']
 			}
 		})
 	)
@@ -51,7 +51,31 @@ export default function useCaptions(captionTracksYoutube) {
 		}
 	}
 
-	const addCaptions = ({ languageCode, languageName, text, rtl = true }) => {}
+	const addCaptions = ({
+		languageCode,
+		languageName,
+		text,
+		rtl = false,
+		sources = ['local'] // | youtube
+	}) => {
+		setCaptionTracks(oldState => {
+			const newTrack = {
+				languageCode,
+				languageName,
+				rtl,
+				sources // | youtube
+			}
+			return [...oldState, newTrack]
+		})
+
+		setCaptions(oldState => {
+			const phrases = parseSubs(text)
+			return {
+				...oldState,
+				[languageCode]: { text, phrases }
+			}
+		})
+	}
 
 	const selectLang = languageCode => {
 		// unselect
@@ -72,6 +96,7 @@ export default function useCaptions(captionTracksYoutube) {
 		setCaptions,
 		loadCaptions,
 		selectedLangs,
-		selectLang
+		selectLang,
+		addCaptions
 	}
 }

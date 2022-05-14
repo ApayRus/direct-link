@@ -21,7 +21,8 @@ const VideoPage = props => {
 		setCaptions,
 		loadCaptions,
 		selectedLangs,
-		selectLang
+		selectLang,
+		addCaptions
 	} = useCaptions(captionTracksYoutube)
 
 	const [displayMode, setDisplayMode] = useState('info') // | transcript
@@ -41,7 +42,8 @@ const VideoPage = props => {
 		setCaptions,
 		loadCaptions,
 		selectedLangs,
-		selectLang
+		selectLang,
+		addCaptions
 	}
 
 	return (
