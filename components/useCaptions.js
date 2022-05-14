@@ -5,6 +5,20 @@ export default function useCaptions(captionTracksYoutube) {
 	// captionTracks - it's available caption meta info,
 	// captions - it's loaded captions: text and parsed phrases
 
+	const [captionTracks, setCaptionTracks] = useState(
+		captionTracksYoutube.map(track => {
+			const {
+				name: { simpleText: languageName },
+				...restTrack
+			} = track
+
+			return {
+				...restTrack,
+				languageName,
+				source: 'youtube'
+			}
+		})
+	)
 
 	const [captions, setCaptions] = useState({})
 
@@ -38,6 +52,8 @@ export default function useCaptions(captionTracksYoutube) {
 		}
 	}
 
+	const addCaptions = ({ languageCode, languageName, text, rtl = true }) => {}
+
 	const selectLang = languageCode => {
 		// unselect
 		if (selectedLangs.includes(languageCode)) {
@@ -53,6 +69,8 @@ export default function useCaptions(captionTracksYoutube) {
 
 	return {
 		captions,
+		captionTracks,
+		setCaptions,
 		loadCaptions,
 		selectedLangs,
 		selectLang

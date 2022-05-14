@@ -22,13 +22,9 @@ function SubtitleFileLinks(props) {
 		<List>
 			<Grid container>
 				{captionTracks.map((elem, index) => {
-					const {
-						baseUrl,
-						languageCode,
-						name: { simpleText: label }
-					} = elem
+					const { baseUrl, languageCode, languageName } = elem
 
-					const langCode = label.includes('auto')
+					const langCode = languageName.includes('auto')
 						? languageCode + '-auto'
 						: languageCode // we need auto to avoid double select by similar code
 
@@ -36,7 +32,7 @@ function SubtitleFileLinks(props) {
 						selectedLangs.findIndex(elem => elem === langCode) + 1 || 0
 
 					return (
-						<Grid key={`subtitles-${label}-${index}`} item md={4} xs={6}>
+						<Grid key={`subtitles-${languageCode}-${index}`} item md={4} xs={6}>
 							<ListItem>
 								<ListItemAvatar>
 									{langIndex ? (
@@ -63,7 +59,7 @@ function SubtitleFileLinks(props) {
 										style={{ color: 'grey', cursor: 'pointer' }}
 										variant='body1'
 									>
-										{label}
+										{languageName}
 									</Typography>
 								</Link>
 							</ListItem>
