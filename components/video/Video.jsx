@@ -1,7 +1,7 @@
 import React from 'react'
 
 function Video({ captionTracks, urlVideo, poster }) {
-	const subtitlesTracksForVideo = captionTracks.map((elem, index) => {
+	/* 	const subtitlesTracksForVideo = captionTracks.map((elem, index) => {
 		const {
 			baseUrl,
 			languageCode,
@@ -17,11 +17,11 @@ function Video({ captionTracks, urlVideo, poster }) {
 				label={label}
 			></track>
 		)
-	})
+	}) */
 
 	return (
 		<video controls src={urlVideo} poster={poster} style={{ width: '100%' }}>
-			{subtitlesTracksForVideo}
+			{/* {subtitlesTracksForVideo} */}
 		</video>
 	)
 }
