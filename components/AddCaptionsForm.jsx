@@ -46,7 +46,9 @@ export default function AddCaptionsForm(props) {
 				Add Captions/Subtitles
 			</Button>
 			<form style={{ display: showForm ? 'block' : 'none' }}>
-				<div style={{ display: 'flex', alignItems: 'center' }}>
+				<div
+					style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}
+				>
 					<TextField
 						label='lang code'
 						style={{ width: 100, marginRight: 10 }}
