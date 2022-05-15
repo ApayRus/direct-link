@@ -12,8 +12,10 @@ export default function TrackCaptions(props) {
 		addCaptions
 	} = props
 
-	const langAvatarClickHandler = languageCode => {
-		loadCaptions(languageCode)
+	const langAvatarClickHandler = (languageCode, sources) => {
+		if (!sources.includes('local')) {
+			loadCaptions(languageCode)
+		}
 		selectLang(languageCode)
 	}
 
@@ -22,7 +24,7 @@ export default function TrackCaptions(props) {
 			<List>
 				<Grid container>
 					{captionTracks.map((elem, index) => {
-						const { baseUrl, languageCode, languageName } = elem
+						const { baseUrl, languageCode, languageName, sources } = elem
 
 						const langOrder =
 							selectedLangs.findIndex(elem => elem === languageCode) + 1 || 0
@@ -39,10 +41,15 @@ export default function TrackCaptions(props) {
 										<LangAvatar
 											langOrder={langOrder}
 											languageCode={languageCode}
+											sources={sources}
 											onClickHandler={langAvatarClickHandler}
 										/>
 									</ListItemAvatar>
-									<LangLink text={languageName} url={baseUrl} />
+									<LangLink
+										text={languageName}
+										url={baseUrl}
+										sources={sources}
+									/>
 								</ListItem>
 							</Grid>
 						)

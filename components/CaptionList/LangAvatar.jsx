@@ -3,13 +3,14 @@ import { Badge, Avatar } from '@material-ui/core'
 export default function LangAvatar({
 	langOrder,
 	languageCode,
-	onClickHandler
+	onClickHandler,
+	sources
 }) {
 	return langOrder ? (
 		<Badge badgeContent={langOrder} color='primary'>
 			<Avatar
 				style={{ cursor: 'pointer' }}
-				onClick={() => onClickHandler(languageCode)}
+				onClick={() => onClickHandler(languageCode, sources)}
 			>
 				{languageCode}
 			</Avatar>
@@ -17,7 +18,7 @@ export default function LangAvatar({
 	) : (
 		<Avatar
 			style={{ cursor: 'pointer' }}
-			onClick={() => onClickHandler(languageCode)}
+			onClick={() => onClickHandler(languageCode, sources)}
 			color='primary'
 		>
 			{languageCode}
