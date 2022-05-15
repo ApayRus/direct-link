@@ -6,6 +6,7 @@ import Thumbnails from './video/Thumbnails'
 import ShowingModeSwitcher from './DisplayModeSwitcher'
 import Phrases from './video/Phrases'
 import { parseSubs } from 'frazy-parser'
+import { useRef } from 'react'
 
 const VideoInfo = props => {
 	const {
@@ -27,6 +28,8 @@ const VideoInfo = props => {
 		addCaptions
 	} = props
 
+	const mediaRef = useRef(null)
+
 	const titleBlock = (
 		<div style={styles.block}>
 			<Typography style={{ fontSize: 40, textAlign: 'center' }} variant='h1'>
@@ -42,7 +45,13 @@ const VideoInfo = props => {
 	)
 
 	const videoBlock = (
-		<Video captionTracks={captionTracks} urlVideo={urlVideo} poster={poster} />
+		<video
+			ref={mediaRef}
+			controls
+			src={urlVideo}
+			poster={poster}
+			style={{ width: '100%' }}
+		></video>
 	)
 
 	const audioBlock = (
@@ -93,7 +102,11 @@ const VideoInfo = props => {
 	)
 
 	const transcriptBlock = (
-		<Phrases selectedLangs={selectedLangs} captions={captions} />
+		<Phrases
+			mediaRef={mediaRef.current}
+			selectedLangs={selectedLangs}
+			captions={captions}
+		/>
 	)
 
 	const editBlock = (

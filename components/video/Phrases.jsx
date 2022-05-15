@@ -1,9 +1,11 @@
 import styles from './Phrases.module.css'
 import PlayIcon from '@material-ui/icons/PlayArrow'
+import PauseIcon from '@material-ui/icons/Pause'
 import { IconButton } from '@material-ui/core'
+import { formatSecondsToTime } from 'frazy-parser'
 
 const Phrases = props => {
-	const { selectedLangs, captions } = props
+	const { selectedLangs, captions, mediaRef } = props
 
 	const phrasesSelectedLangs = selectedLangs.map(lang => captions[lang].phrases)
 
@@ -14,8 +16,27 @@ const Phrases = props => {
 	return (
 		<div className={styles.root}>
 			{multilangPhraseBundles.map((bundle, phraseIndex) => {
+				const { start, end } = bundle[0]
+
 				return (
 					<div className={styles.phraseContainer} key={`bundle-${phraseIndex}`}>
+						<div className={styles.phraseTopInfo}>
+							<div className={styles.langCode}>
+								{`${formatSecondsToTime(start)}-${formatSecondsToTime(end)}`}
+								&nbsp;
+							</div>
+							<div className={styles.playButton}>
+								<IconButton
+									onClick={() => {
+										mediaRef.currentTime = start
+										mediaRef.paused ? mediaRef.play() : mediaRef.pause()
+									}}
+									style={{ fontSize: '0.7rem', padding: 1, color: 'silver' }}
+								>
+									<PlayIcon style={{ fontSize: '0.7rem' }} /> {phraseIndex + 1}
+								</IconButton>
+							</div>
+						</div>
 						{bundle.map((phrase, langIndex) => {
 							const lang = selectedLangs[langIndex]
 							const langOrder = langIndex => {
@@ -38,16 +59,19 @@ const Phrases = props => {
 								</div>
 							)
 						})}
-						<div className={styles.playButton}>
-							<IconButton
-								style={{ fontSize: '0.7rem', padding: 1, color: 'silver' }}
-							>
-								<PlayIcon style={{ fontSize: '0.7rem' }} /> {phraseIndex + 1}
-							</IconButton>
-						</div>
 					</div>
 				)
 			})}
+			<div className={styles.controlsPanel}>
+				{/* 				<IconButton onClick={() => mediaRef.pause()}>
+					<PauseIcon />
+				</IconButton> */}
+				<IconButton
+					onClick={() => (mediaRef.paused ? mediaRef.play() : mediaRef.pause())}
+				>
+					<PlayIcon />
+				</IconButton>
+			</div>
 		</div>
 	)
 }
