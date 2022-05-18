@@ -6,7 +6,8 @@ import Thumbnails from './video/Thumbnails'
 import ShowingModeSwitcher from './DisplayModeSwitcher'
 import Phrases from './video/Phrases'
 import { parseSubs } from 'frazy-parser'
-import { useRef } from 'react'
+import useCaptions from './useCaptions'
+import usePlayer from './usePlayer'
 
 const VideoInfo = props => {
 	const {
@@ -19,14 +20,15 @@ const VideoInfo = props => {
 		description,
 		image: poster,
 		setDisplayMode,
-		displayMode,
+	const {
+		captionTracks,
 		captions,
 		setCaptions,
 		loadCaptions,
 		selectedLangs,
 		selectLang,
 		addCaptions
-	} = props
+	} = useCaptions(captionTracksYoutube)
 
 	const mediaRef = useRef(null)
 

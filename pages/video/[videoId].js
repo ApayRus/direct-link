@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { getVideoInfo } from '../api/video/[videoId]'
 import VideoArticle from '../../components/VideoArticle'
 import Layout from '../../components/Layout'
-import useCaptions from '../../components/useCaptions'
 
 const VideoPage = props => {
 	const {
@@ -11,19 +10,9 @@ const VideoPage = props => {
 		keywords,
 		urlVideo,
 		urlAudio,
-		captionTracks: captionTracksYoutube,
+		captionTracks,
 		thumbnails
 	} = props
-
-	const {
-		captionTracks,
-		captions,
-		setCaptions,
-		loadCaptions,
-		selectedLangs,
-		selectLang,
-		addCaptions
-	} = useCaptions(captionTracksYoutube)
 
 	const [displayMode, setDisplayMode] = useState('info') // | transcript
 
@@ -32,18 +21,12 @@ const VideoPage = props => {
 
 	const videoArticleProps = {
 		...headProps,
-		captionTracks,
 		urlVideo,
 		urlAudio,
 		thumbnails,
+		captionTracks,
 		displayMode,
-		setDisplayMode,
-		captions,
-		setCaptions,
-		loadCaptions,
-		selectedLangs,
-		selectLang,
-		addCaptions
+		setDisplayMode
 	}
 
 	return (
