@@ -6,6 +6,7 @@ import Thumbnails from './video/Thumbnails'
 import ShowingModeSwitcher from './DisplayModeSwitcher'
 import Phrases from './video/Phrases'
 import { parseSubs } from 'frazy-parser'
+import { useRef, useEffect } from 'react'
 import useCaptions from './useCaptions'
 import usePlayer from './usePlayer'
 
@@ -31,6 +32,11 @@ const VideoInfo = props => {
 	} = useCaptions(captionTracksYoutube)
 
 	const mediaRef = useRef(null)
+	const { onTimeUpdate, currentPhraseNum } = usePlayer({
+		media: mediaRef.current,
+		waveformContainer: waveformRef.current,
+		phrases: mainPhrases
+	})
 
 	const titleBlock = (
 		<div style={styles.block}>
@@ -53,6 +59,7 @@ const VideoInfo = props => {
 			src={urlVideo}
 			poster={poster}
 			style={{ width: '100%' }}
+			onTimeUpdate={onTimeUpdate}
 		></video>
 	)
 

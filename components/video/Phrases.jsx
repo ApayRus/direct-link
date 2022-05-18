@@ -28,8 +28,12 @@ const Phrases = props => {
 							<div className={styles.playButton}>
 								<IconButton
 									onClick={() => {
-										mediaRef.currentTime = start
-										mediaRef.paused ? mediaRef.play() : mediaRef.pause()
+										if (mediaRef.paused) {
+											mediaRef.currentTime = start
+											mediaRef.play()
+										} else {
+											mediaRef.pause()
+										}
 									}}
 									style={{ fontSize: '0.7rem', padding: 1, color: 'silver' }}
 								>
