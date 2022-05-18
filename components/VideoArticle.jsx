@@ -9,18 +9,23 @@ import { parseSubs } from 'frazy-parser'
 import { useRef, useEffect } from 'react'
 import useCaptions from './useCaptions'
 import usePlayer from './usePlayer'
+import peaks from './peaks'
+import initWavesurfer from '../wavesurfer'
 
 const VideoInfo = props => {
 	const {
 		title,
 		keywords,
-		captionTracks,
+		captionTracks: captionTracksYoutube,
 		urlVideo,
 		urlAudio,
 		thumbnails,
 		description,
 		image: poster,
 		setDisplayMode,
+		displayMode
+	} = props
+
 	const {
 		captionTracks,
 		captions,
@@ -32,6 +37,29 @@ const VideoInfo = props => {
 	} = useCaptions(captionTracksYoutube)
 
 	const mediaRef = useRef(null)
+	const audioRef = useRef(null)
+	const waveformRef = useRef(null)
+	const timelineRef = useRef(null)
+	const wavesurferRef = useRef(null)
+
+	const { phrases: mainPhrases } = captions[selectedLangs[0] || 'en'] || {}
+
+	useEffect(() => {
+		const initWavesurfer0 = async () => {
+			const wavesurfer = await initWavesurfer({
+				waveformContainer: waveformRef.current,
+				timelineContainer: timelineRef.current,
+				regions: mainPhrases,
+				mediaElement: mediaRef.current,
+				peaks
+			})
+			wavesurferRef.current = wavesurfer
+			console.log('wavesurfer')
+			console.log(wavesurfer)
+		}
+		initWavesurfer0()
+	}, [])
+
 	const { onTimeUpdate, currentPhraseNum } = usePlayer({
 		media: mediaRef.current,
 		waveformContainer: waveformRef.current,
@@ -57,6 +85,8 @@ const VideoInfo = props => {
 			ref={mediaRef}
 			controls
 			src={urlVideo}
+			// src='http://localhost:3000/videoplayback.m4a'
+			// src='http://localhost:3000/nevzuk.mp4'
 			poster={poster}
 			style={{ width: '100%' }}
 			onTimeUpdate={onTimeUpdate}
@@ -65,7 +95,7 @@ const VideoInfo = props => {
 
 	const audioBlock = (
 		<div style={styles.block}>
-			<audio controls src={urlAudio} style={{ width: '100%' }} />
+			<audio ref={audioRef} controls src={urlAudio} style={{ width: '100%' }} />
 		</div>
 	)
 
@@ -153,6 +183,9 @@ const VideoInfo = props => {
 					>
 						{videoBlock}
 					</div>
+					<div>{currentPhraseNum}</div>
+					<div ref={waveformRef} />
+					<div ref={timelineRef} />
 					<div style={styles.block}>
 						<ShowingModeSwitcher
 							displayMode={displayMode}
