@@ -36,15 +36,17 @@ export default function useCaptions(captionTracksYoutube) {
 		)
 		if (captionTrack) {
 			const { baseUrl, languageCode } = captionTrack
-
 			fetch(`${baseUrl}&fmt=vtt`).then(response => {
 				response.text().then(text => {
 					setCaptions(oldState => {
 						const phrases = parseSubs(text)
-						return {
+
+						const newState = {
 							...oldState,
 							[languageCode]: { text, phrases }
 						}
+
+						return newState
 					})
 				})
 			})
@@ -90,13 +92,33 @@ export default function useCaptions(captionTracksYoutube) {
 		}
 	}
 
+	const langAvatarClickHandler = (languageCode, sources) => {
+		if (!sources.includes('local')) {
+			loadCaptions(languageCode)
+		}
+		selectLang(languageCode)
+	}
+
+	const captionTextEdited = event => {
+		const {
+			target: { value: text }
+		} = event
+		const [langCode] = selectedLangs
+		const phrases = parseSubs(text)
+
+		setCaptions(oldState => ({
+			...oldState,
+			[langCode]: { text, phrases }
+		}))
+	}
+
 	return {
 		captions,
 		captionTracks,
 		setCaptions,
-		loadCaptions,
 		selectedLangs,
-		selectLang,
-		addCaptions
+		addCaptions,
+		langAvatarClickHandler,
+		captionTextEdited
 	}
 }

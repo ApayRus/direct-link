@@ -2,22 +2,12 @@ import { List, ListItem, ListItemAvatar, Grid } from '@material-ui/core'
 import LangAvatar from './LangAvatar'
 import LangLink from './LangLink'
 import AddCaptionForm from '../AddCaptionsForm'
+import { useContext } from 'react'
+import { CaptionContext } from '../VideoArticle'
 
-export default function TrackCaptions(props) {
-	const {
-		captionTracks,
-		loadCaptions,
-		selectedLangs,
-		selectLang,
-		addCaptions
-	} = props
-
-	const langAvatarClickHandler = (languageCode, sources) => {
-		if (!sources.includes('local')) {
-			loadCaptions(languageCode)
-		}
-		selectLang(languageCode)
-	}
+export default function TrackCaptions() {
+	const { captionTracks, selectedLangs, addCaptions } =
+		useContext(CaptionContext)
 
 	return (
 		<>
@@ -42,7 +32,6 @@ export default function TrackCaptions(props) {
 											langOrder={langOrder}
 											languageCode={languageCode}
 											sources={sources}
-											onClickHandler={langAvatarClickHandler}
 										/>
 									</ListItemAvatar>
 									<LangLink

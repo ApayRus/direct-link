@@ -1,16 +1,15 @@
 import { Badge, Avatar } from '@material-ui/core'
+import { useContext } from 'react'
+import { CaptionContext } from '../VideoArticle'
 
-export default function LangAvatar({
-	langOrder,
-	languageCode,
-	onClickHandler,
-	sources
-}) {
+export default function LangAvatar({ langOrder, languageCode, sources }) {
+	const { langAvatarClickHandler } = useContext(CaptionContext)
+
 	return langOrder ? (
 		<Badge badgeContent={langOrder} color='primary'>
 			<Avatar
 				style={{ cursor: 'pointer' }}
-				onClick={() => onClickHandler(languageCode, sources)}
+				onClick={() => langAvatarClickHandler(languageCode, sources)}
 			>
 				{languageCode}
 			</Avatar>
@@ -18,7 +17,7 @@ export default function LangAvatar({
 	) : (
 		<Avatar
 			style={{ cursor: 'pointer' }}
-			onClick={() => onClickHandler(languageCode, sources)}
+			onClick={() => langAvatarClickHandler(languageCode, sources)}
 			color='primary'
 		>
 			{languageCode}

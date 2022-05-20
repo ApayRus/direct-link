@@ -1,16 +1,18 @@
-import { TextareaAutosize, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import CaptionList from './CaptionList'
 import Keywords from './video/Keywords'
 import Video from './video/Video'
 import Thumbnails from './video/Thumbnails'
 import ShowingModeSwitcher from './DisplayModeSwitcher'
 import Phrases from './video/Phrases'
-import { parseSubs } from 'frazy-parser'
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, createContext } from 'react'
 import useCaptions from './useCaptions'
 import usePlayer from './usePlayer'
 import peaks from './peaks'
 import initWavesurfer from '../wavesurfer'
+import EditCaptionTextarea from './EditCaptionTextarea'
+
+export const CaptionContext = createContext()
 
 const VideoInfo = props => {
 	const {
@@ -26,15 +28,9 @@ const VideoInfo = props => {
 		displayMode
 	} = props
 
-	const {
-		captionTracks,
-		captions,
-		setCaptions,
-		loadCaptions,
-		selectedLangs,
-		selectLang,
-		addCaptions
-	} = useCaptions(captionTracksYoutube)
+	const captionContextValue = useCaptions(captionTracksYoutube)
+
+	const { captions, selectedLangs } = captionContextValue
 
 	const mediaRef = useRef(null)
 	const audioRef = useRef(null)
@@ -43,6 +39,12 @@ const VideoInfo = props => {
 	const wavesurferRef = useRef(null)
 
 	const { phrases: mainPhrases } = captions[selectedLangs[0] || 'en'] || {}
+
+	const { onTimeUpdate, currentPhraseNum } = usePlayer({
+		media: mediaRef.current,
+		waveformContainer: waveformRef.current,
+		phrases: mainPhrases
+	})
 
 	useEffect(() => {
 		const initWavesurfer0 = async () => {
@@ -59,12 +61,6 @@ const VideoInfo = props => {
 		}
 		initWavesurfer0()
 	}, [])
-
-	const { onTimeUpdate, currentPhraseNum } = usePlayer({
-		media: mediaRef.current,
-		waveformContainer: waveformRef.current,
-		phrases: mainPhrases
-	})
 
 	const titleBlock = (
 		<div style={styles.block}>
@@ -104,13 +100,7 @@ const VideoInfo = props => {
 			<Typography style={{ fontSize: 20 }} variant='h3'>
 				Captions/Subtitles:
 			</Typography>
-			<CaptionList
-				captionTracks={captionTracks}
-				loadCaptions={loadCaptions}
-				selectedLangs={selectedLangs}
-				selectLang={selectLang}
-				addCaptions={addCaptions}
-			/>
+			<CaptionList />
 			<p />
 		</div>
 	)
@@ -140,67 +130,51 @@ const VideoInfo = props => {
 		</div>
 	)
 
-	const transcriptBlock = (
-		<Phrases
-			mediaRef={mediaRef.current}
-			selectedLangs={selectedLangs}
-			captions={captions}
-		/>
-	)
-
-	const editBlock = (
-		<TextareaAutosize
-			style={{ width: '100%' }}
-			defaultValue={captions[selectedLangs?.[0]]?.text}
-			onBlur={event => {
-				const {
-					target: { value: text }
-				} = event
-				const [langCode] = selectedLangs
-				const phrases = parseSubs(text)
-
-				setCaptions(oldState => ({
-					...oldState,
-					[langCode]: { text, phrases }
-				}))
-			}}
-		/>
-	)
+	const transcriptBlock = <Phrases mediaRef={mediaRef.current} />
 
 	return (
-		<>
-			<article>
-				{displayMode === 'info' && titleBlock}
-				{displayMode === 'info' && keywordsBlock}
+		<div>
+			<CaptionContext.Provider value={captionContextValue}>
+				<article>
+					{displayMode === 'info' && titleBlock}
+					{displayMode === 'info' && keywordsBlock}
 
-				<div>
-					<div
-						style={{
-							position: displayMode === 'transcript' ? 'sticky' : 'unset',
-							top: 0,
-							zIndex: 1
-						}}
-					>
-						{videoBlock}
+					<div>
+						<div
+							style={{
+								position: displayMode === 'transcript' ? 'sticky' : 'unset',
+								top: 0,
+								zIndex: 1
+							}}
+						>
+							{videoBlock}
+						</div>
+						<div ref={waveformRef} />
+						<div ref={timelineRef} />
+						<div style={styles.block}>
+							<ShowingModeSwitcher
+								displayMode={displayMode}
+								setDisplayMode={setDisplayMode}
+							/>
+						</div>
+						{displayMode === 'transcript' && <div>{transcriptBlock}</div>}
+						{displayMode === 'edit' && (
+							<div>
+								<EditCaptionTextarea />
+							</div>
+						)}
 					</div>
-					<div>{currentPhraseNum}</div>
-					<div ref={waveformRef} />
-					<div ref={timelineRef} />
-					<div style={styles.block}>
-						<ShowingModeSwitcher
-							displayMode={displayMode}
-							setDisplayMode={setDisplayMode}
-						/>
-					</div>
-					{displayMode === 'transcript' && <div>{transcriptBlock}</div>}
-					{displayMode === 'edit' && <div>{editBlock}</div>}
-				</div>
-				{displayMode === 'info' && audioBlock}
-				{displayMode === 'info' && captionsBlock}
-				{displayMode === 'info' && thumbnailsBlock}
-				{displayMode === 'info' && descriptionBlock}
-			</article>
-		</>
+					{displayMode === 'info' && (
+						<div>
+							{audioBlock}
+							{captionsBlock}
+							{thumbnailsBlock}
+							{descriptionBlock}
+						</div>
+					)}
+				</article>
+			</CaptionContext.Provider>
+		</div>
 	)
 }
 

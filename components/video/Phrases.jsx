@@ -3,9 +3,12 @@ import PlayIcon from '@material-ui/icons/PlayArrow'
 import PauseIcon from '@material-ui/icons/Pause'
 import { IconButton } from '@material-ui/core'
 import { formatSecondsToTime } from 'frazy-parser'
+import { useContext } from 'react'
+import { CaptionContext } from '../VideoArticle'
 
 const Phrases = props => {
-	const { selectedLangs, captions, mediaRef } = props
+	const { mediaRef } = props
+	const { selectedLangs, captions } = useContext(CaptionContext)
 
 	const phrasesSelectedLangs = selectedLangs.map(lang => captions[lang].phrases)
 
