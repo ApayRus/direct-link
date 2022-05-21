@@ -5,7 +5,6 @@ import initWavesurfer from '../wavesurfer'
 
 export default function usePlayer({
 	mediaElementRef,
-	phrases = [],
 	waveformContainerRef,
 	timelineContainerRef,
 	peaks
@@ -30,10 +29,12 @@ export default function usePlayer({
 			const wavesurfer = await initWavesurfer({
 				waveformContainer: waveformContainerRef.current,
 				timelineContainer: timelineContainerRef.current,
-				regions: phrases,
 				mediaElement: mediaElementRef.current,
 				peaks
 			})
+
+			setPlayerState(oldState => ({ ...oldState, isReady: true }))
+
 			wavesurferRef.current = wavesurfer
 			console.log('wavesurfer')
 			console.log(wavesurfer)
@@ -41,28 +42,16 @@ export default function usePlayer({
 		initWavesurfer0()
 	}, [])
 
-	const wafesurferRef = useRef(null)
-
-	const { currentPhraseNum } = playerState
-
 	const onTimeUpdate = event => {
 		//setPlayerState(oldState => ({...oldState, curre}))
 		const {
 			target: { currentTime }
 		} = event
-
-		const { end: currentPhaseEnd } = phrases[currentPhraseNum] || {}
-
-		if (
-			currentTime > currentPhaseEnd &&
-			currentPhraseNum < phrases.length - 1
-		) {
-			setPlayerState(prevState => ({
-				...prevState,
-				currentPhraseNum: currentPhraseNum + 1
-			}))
-		}
 	}
 
-	return { onTimeUpdate, currentPhraseNum, wavesurfer: wafesurferRef.current }
+	return {
+		onTimeUpdate,
+		wavesurfer: wavesurferRef.current,
+		isReady: playerState.isReady
+	}
 }

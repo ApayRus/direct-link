@@ -30,22 +30,23 @@ const VideoInfo = props => {
 
 	const captionContextValue = useCaptions(captionTracksYoutube)
 
-	const { captions, selectedLangs } = captionContextValue
+	const { setWavesurfer } = captionContextValue
 
 	const videoRef = useRef(null)
 	const audioRef = useRef(null)
 	const waveformContainerRef = useRef(null)
 	const timelineContainerRef = useRef(null)
 
-	const { phrases: mainPhrases = [] } = captions[selectedLangs[0] || 'en'] || {}
-
-	const { onTimeUpdate, currentPhraseNum } = usePlayer({
+	const { onTimeUpdate, wavesurfer, isReady } = usePlayer({
 		mediaElementRef: videoRef,
 		waveformContainerRef,
 		timelineContainerRef,
-		phrases: mainPhrases,
 		peaks
 	})
+
+	if (isReady) {
+		setWavesurfer(wavesurfer)
+	}
 
 	const titleBlock = (
 		<div style={styles.block}>
@@ -76,7 +77,13 @@ const VideoInfo = props => {
 
 	const audioBlock = (
 		<div style={styles.block}>
-			<audio ref={audioRef} controls src={urlAudio} style={{ width: '100%' }} />
+			<audio
+				ref={audioRef}
+				controls
+				// src={`http://localhost:3000/procrastinator_mind.m4a`}
+				src={urlAudio}
+				style={{ width: '100%' }}
+			/>
 		</div>
 	)
 

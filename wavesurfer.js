@@ -28,7 +28,7 @@ export default async function initWavesurfer({
 			backend: 'MediaElement',
 			normalize: true,
 			autoCenter: false,
-			// minPxPerSec: 5,
+			minPxPerSec: 50,
 			scrollParent: true,
 			/* 			
 				xhr: {
