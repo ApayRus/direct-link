@@ -5,11 +5,11 @@ import Video from './video/Video'
 import Thumbnails from './video/Thumbnails'
 import ShowingModeSwitcher from './DisplayModeSwitcher'
 import Phrases from './video/Phrases'
-import { useRef, useEffect, createContext } from 'react'
+import { useRef, createContext } from 'react'
 import useCaptions from './useCaptions'
 import usePlayer from './usePlayer'
 import peaks from './peaks'
-import initWavesurfer from '../wavesurfer'
+
 import EditCaptionTextarea from './EditCaptionTextarea'
 
 export const CaptionContext = createContext()
@@ -32,35 +32,20 @@ const VideoInfo = props => {
 
 	const { captions, selectedLangs } = captionContextValue
 
-	const mediaRef = useRef(null)
+	const videoRef = useRef(null)
 	const audioRef = useRef(null)
-	const waveformRef = useRef(null)
-	const timelineRef = useRef(null)
-	const wavesurferRef = useRef(null)
+	const waveformContainerRef = useRef(null)
+	const timelineContainerRef = useRef(null)
 
-	const { phrases: mainPhrases } = captions[selectedLangs[0] || 'en'] || {}
+	const { phrases: mainPhrases = [] } = captions[selectedLangs[0] || 'en'] || {}
 
 	const { onTimeUpdate, currentPhraseNum } = usePlayer({
-		media: mediaRef.current,
-		waveformContainer: waveformRef.current,
-		phrases: mainPhrases
+		mediaElementRef: videoRef,
+		waveformContainerRef,
+		timelineContainerRef,
+		phrases: mainPhrases,
+		peaks
 	})
-
-	useEffect(() => {
-		const initWavesurfer0 = async () => {
-			const wavesurfer = await initWavesurfer({
-				waveformContainer: waveformRef.current,
-				timelineContainer: timelineRef.current,
-				regions: mainPhrases,
-				mediaElement: mediaRef.current,
-				peaks
-			})
-			wavesurferRef.current = wavesurfer
-			console.log('wavesurfer')
-			console.log(wavesurfer)
-		}
-		initWavesurfer0()
-	}, [])
 
 	const titleBlock = (
 		<div style={styles.block}>
@@ -78,7 +63,7 @@ const VideoInfo = props => {
 
 	const videoBlock = (
 		<video
-			ref={mediaRef}
+			ref={videoRef}
 			controls
 			src={urlVideo}
 			// src='http://localhost:3000/videoplayback.m4a'
@@ -130,7 +115,7 @@ const VideoInfo = props => {
 		</div>
 	)
 
-	const transcriptBlock = <Phrases mediaRef={mediaRef.current} />
+	const transcriptBlock = <Phrases mediaRef={videoRef.current} />
 
 	return (
 		<div>
@@ -138,7 +123,6 @@ const VideoInfo = props => {
 				<article>
 					{displayMode === 'info' && titleBlock}
 					{displayMode === 'info' && keywordsBlock}
-
 					<div>
 						<div
 							style={{
@@ -149,8 +133,8 @@ const VideoInfo = props => {
 						>
 							{videoBlock}
 						</div>
-						<div ref={waveformRef} />
-						<div ref={timelineRef} />
+						<div ref={waveformContainerRef} />
+						<div ref={timelineContainerRef} />
 						<div style={styles.block}>
 							<ShowingModeSwitcher
 								displayMode={displayMode}

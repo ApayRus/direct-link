@@ -1,8 +1,15 @@
 // import WaveSurfer from 'wavesurfer.js'
 // import RegionsPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min'
 import { useEffect, useRef, useState } from 'react'
+import initWavesurfer from '../wavesurfer'
 
-export default function usePlayer({ media, phrases = [], waveformContainer }) {
+export default function usePlayer({
+	mediaElementRef,
+	phrases = [],
+	waveformContainerRef,
+	timelineContainerRef,
+	peaks
+}) {
 	const [playerState, setPlayerState] = useState({
 		isPlaying: false,
 		currentTime: 0,
@@ -13,10 +20,26 @@ export default function usePlayer({ media, phrases = [], waveformContainer }) {
 		hideVideo: false,
 		playOnePhrase: false,
 		start: 0,
-		end: 1,
-		media,
-		phrases
+		end: 1
 	})
+
+	const wavesurferRef = useRef(null)
+
+	useEffect(() => {
+		const initWavesurfer0 = async () => {
+			const wavesurfer = await initWavesurfer({
+				waveformContainer: waveformContainerRef.current,
+				timelineContainer: timelineContainerRef.current,
+				regions: phrases,
+				mediaElement: mediaElementRef.current,
+				peaks
+			})
+			wavesurferRef.current = wavesurfer
+			console.log('wavesurfer')
+			console.log(wavesurfer)
+		}
+		initWavesurfer0()
+	}, [])
 
 	const wafesurferRef = useRef(null)
 
