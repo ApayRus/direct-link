@@ -33,13 +33,17 @@ export default function usePlayer({
 				peaks
 			})
 
+			wavesurferRef.current = wavesurfer
+
 			setPlayerState(oldState => ({ ...oldState, isReady: true }))
 
-			wavesurferRef.current = wavesurfer
 			console.log('wavesurfer')
 			console.log(wavesurfer)
 		}
 		initWavesurfer0()
+		return () => {
+			wavesurferRef.current.destroy()
+		}
 	}, [])
 
 	const onTimeUpdate = event => {
