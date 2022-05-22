@@ -21,7 +21,7 @@ const prepareCaptionTracks = captionTracksYoutube =>
 		}
 	})
 
-export default function useCaptions(captionTracksYoutube) {
+export default function useCaptions(captionTracksYoutube, setSnackbar) {
 	// captionTracks - it's available caption meta info,
 	// captions - it's loaded captions: text and parsed phrases
 
@@ -134,12 +134,21 @@ export default function useCaptions(captionTracksYoutube) {
 	}
 
 	const langAvatarClickHandler = async (languageCode, sources) => {
-		if (!sources.includes('local')) {
-			await loadCaptions(languageCode)
-			addSource(languageCode, 'local')
+		if (sources.includes('local')) {
+			selectLang(languageCode)
+		} /*  (!sources.includes('local')) */ else {
+			try {
+				await loadCaptions(languageCode)
+				addSource(languageCode, 'local')
+				selectLang(languageCode)
+			} catch (e) {
+				setSnackbar({
+					open: true,
+					message: 'cannot download subtitles',
+					severity: 'error'
+				})
+			}
 		}
-
-		selectLang(languageCode)
 	}
 
 	// when we choose 1st lang, it will be phrases for media file ({start, end})
@@ -147,7 +156,7 @@ export default function useCaptions(captionTracksYoutube) {
 	useEffect(() => {
 		if (selectedLangs.length === 1) {
 			const [languageCode] = selectedLangs
-			const { phrases } = captions[languageCode]
+			const { phrases = [] } = captions[languageCode]
 			setRegions(phrases)
 		}
 		if (selectedLangs.length === 0) {

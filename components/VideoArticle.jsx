@@ -5,12 +5,13 @@ import Video from './video/Video'
 import Thumbnails from './video/Thumbnails'
 import ShowingModeSwitcher from './DisplayModeSwitcher'
 import Phrases from './video/Phrases'
-import { useRef, createContext } from 'react'
+import { useRef, createContext, useContext } from 'react'
 import useCaptions from './useCaptions'
 import usePlayer from './usePlayer'
 import peaks from './peaks'
 
 import EditCaptionTextarea from './EditCaptionTextarea'
+import { SnackbarContext } from './SnackbarProvider'
 
 export const CaptionContext = createContext()
 
@@ -28,7 +29,9 @@ const VideoInfo = props => {
 		displayMode
 	} = props
 
-	const captionContextValue = useCaptions(captionTracksYoutube)
+	const { setSnackbar } = useContext(SnackbarContext)
+
+	const captionContextValue = useCaptions(captionTracksYoutube, setSnackbar)
 
 	const { setWavesurfer } = captionContextValue
 
