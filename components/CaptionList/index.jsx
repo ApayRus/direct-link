@@ -23,7 +23,9 @@ export default function TrackCaptions() {
 							<Grid
 								key={`subtitles-${languageCode}-${index}`}
 								item
-								md={4}
+								// lg={1}
+								md={2}
+								sm={4}
 								xs={6}
 							>
 								<ListItem>

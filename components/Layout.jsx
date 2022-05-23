@@ -5,23 +5,21 @@ import Head from './Head'
 
 const Layout = ({ children, headProps = {}, displayMode = 'info' }) => {
 	return (
-		<div>
+		<div
+			style={{
+				display: 'flex',
+				flexDirection: 'column',
+				height: '100vh',
+				alignItems: 'center'
+			}}
+		>
 			{/* meta props */}
 			<Head {...headProps} />
-
-			<Container
-				maxWidth={displayMode === 'info' ? 'sm' : 'xs'}
-				style={{
-					display: 'flex',
-					flexDirection: 'column',
-					height: '100vh',
-					alignItems: 'center'
-				}}
-			>
+			<Container maxWidth={displayMode === 'info' ? 'sm' : 'xs'}>
 				{displayMode === 'info' && <Heading />}
-				<main>{children}</main>
-				{displayMode === 'info' && <Footer />}
 			</Container>
+			<main style={{ width: '100%' }}>{children}</main>
+			{displayMode === 'info' && <Footer />}
 		</div>
 	)
 }

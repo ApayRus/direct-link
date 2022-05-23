@@ -37,6 +37,8 @@ export default function usePlayer({
 
 			setPlayerState(oldState => ({ ...oldState, isReady: true }))
 
+			mediaElementRef.current.controls = true
+
 			console.log('wavesurfer')
 			console.log(wavesurfer)
 		}

@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core'
+import { Container, Typography } from '@material-ui/core'
 import CaptionList from './CaptionList'
 import Keywords from './video/Keywords'
 import Video from './video/Video'
@@ -131,39 +131,49 @@ const VideoInfo = props => {
 		<div>
 			<CaptionContext.Provider value={captionContextValue}>
 				<article>
-					{displayMode === 'info' && titleBlock}
-					{displayMode === 'info' && keywordsBlock}
-					<div>
-						<div
-							style={{
-								position: displayMode === 'transcript' ? 'sticky' : 'unset',
-								top: 0,
-								zIndex: 1
-							}}
-						>
+					<Container>
+						{displayMode === 'info' && titleBlock}
+						{displayMode === 'info' && keywordsBlock}
+					</Container>
+					<div
+						style={{
+							position: displayMode === 'transcript' ? 'sticky' : 'unset',
+							top: 0,
+							zIndex: 1
+						}}
+					>
+						<Container maxWidth={displayMode === 'info' ? 'sm' : 'xs'}>
 							{videoBlock}
-						</div>
-						<div ref={waveformContainerRef} />
-						<div ref={timelineContainerRef} />
-						<div style={styles.block}>
+						</Container>
+					</div>
+					<div ref={waveformContainerRef} />
+					<div ref={timelineContainerRef} />
+					<Container>
+						<div style={{ margin: 10, textAlign: 'center' }}>
 							<ShowingModeSwitcher
 								displayMode={displayMode}
 								setDisplayMode={setDisplayMode}
 							/>
 						</div>
-						{displayMode === 'transcript' && <div>{transcriptBlock}</div>}
+						{displayMode === 'transcript' && (
+							<Container maxWidth='xs'>{transcriptBlock}</Container>
+						)}
 						{displayMode === 'edit' && (
 							<div>
 								<EditCaptionTextarea />
 							</div>
 						)}
-					</div>
+					</Container>
 					{displayMode === 'info' && (
 						<div>
-							{audioBlock}
-							{captionsBlock}
-							{thumbnailsBlock}
-							{descriptionBlock}
+							<Container maxWidth={displayMode === 'info' ? 'sm' : 'xs'}>
+								{audioBlock}
+							</Container>
+							<Container>{captionsBlock}</Container>
+							<Container maxWidth={displayMode === 'info' ? 'sm' : 'xs'}>
+								{thumbnailsBlock}
+								{descriptionBlock}
+							</Container>
 						</div>
 					)}
 				</article>
