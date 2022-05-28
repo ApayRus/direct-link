@@ -8,7 +8,7 @@ import Phrases from './video/Phrases'
 import { useRef, createContext, useContext } from 'react'
 import useCaptions from './useCaptions'
 import usePlayer from './usePlayer'
-import peaks from './peaks'
+import peaks from '../public/fake-content/peaks'
 
 import EditCaptionTextarea from './EditCaptionTextarea'
 import { SnackbarContext } from './SnackbarProvider'
