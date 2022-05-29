@@ -11,10 +11,10 @@ export default async function initWavesurfer({
 }) {
 	const { default: WaveSurfer } = await import('wavesurfer.js')
 	const { default: RegionsPlugin } = await import(
-		'wavesurfer.js/dist/plugin/wavesurfer.regions.min.js'
+		'wavesurfer.js/src/plugin/regions'
 	)
 	const { default: TimelinePlugin } = await import(
-		'wavesurfer.js/dist/plugin/wavesurfer.timeline.min'
+		'wavesurfer.js/src/plugin/timeline'
 	)
 
 	console.log('regions')
@@ -27,26 +27,19 @@ export default async function initWavesurfer({
 			progressColor: '#3B8686',
 			backend: 'MediaElement',
 			normalize: true,
-			autoCenter: false,
+			autoCenter: true,
 			minPxPerSec: 50,
+			height: 100,
 			scrollParent: true,
-			/* 			
-				xhr: {
-					cache: 'default',
-					mode: 'cors',
-					method: 'GET',
-					credentials: 'same-origin',
-					redirect: 'follow',
-					referrer: 'client',
-					headers: [{ key: 'Authorization', value: 'my-token' }]
-				}, */
 			plugins: [
 				RegionsPlugin.create({
 					// regionsMinLength: 2,
 					regions,
 					dragSelection: {
 						slop: 5
-					}
+					},
+					contentEditable: true,
+					removeButton: true
 				}),
 				TimelinePlugin.create({
 					container: timelineContainer

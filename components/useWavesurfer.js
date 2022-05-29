@@ -48,15 +48,7 @@ export default function usePlayer({
 		}
 	}, [])
 
-	const onTimeUpdate = event => {
-		//setPlayerState(oldState => ({...oldState, curre}))
-		const {
-			target: { currentTime }
-		} = event
-	}
-
 	return {
-		onTimeUpdate,
 		wavesurfer: wavesurferRef.current,
 		isReady: playerState.isReady
 	}

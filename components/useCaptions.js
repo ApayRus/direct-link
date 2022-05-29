@@ -1,3 +1,6 @@
+/**
+ * we need wavesurfer instance here to add/remove regions
+ */
 import { parseSubs } from 'frazy-parser'
 import { useEffect, useRef, useState } from 'react'
 
@@ -21,7 +24,11 @@ const prepareCaptionTracks = captionTracksYoutube =>
 		}
 	})
 
-export default function useCaptions(captionTracksYoutube, setSnackbar) {
+export default function useCaptions({
+	captionTracksYoutube,
+	setSnackbar,
+	wavesurfer
+}) {
 	// captionTracks - it's available caption meta info,
 	// captions - it's loaded captions: text and parsed phrases
 
@@ -119,18 +126,14 @@ export default function useCaptions(captionTracksYoutube, setSnackbar) {
 		}))
 	}
 
-	const setWavesurfer = wavesurferInstance => {
-		wavesurferRef.current = wavesurferInstance
-	}
-
 	const setRegions = phrases => {
-		wavesurferRef.current.clearRegions()
+		wavesurfer.clearRegions()
 		phrases.forEach(phrase => {
-			wavesurferRef.current.addRegion(phrase)
+			wavesurfer.addRegion(phrase)
 		})
 	}
 	const clearRegions = () => {
-		wavesurferRef?.current?.clearRegions()
+		wavesurfer?.clearRegions()
 	}
 
 	const langAvatarClickHandler = async (languageCode, sources) => {
@@ -154,7 +157,7 @@ export default function useCaptions(captionTracksYoutube, setSnackbar) {
 	// when we choose 1st lang, it will be phrases for media file ({start, end})
 	// for waveform regions and for playing
 	useEffect(() => {
-		if (selectedLangs.length === 1) {
+		if (selectedLangs.length >= 1) {
 			const [languageCode] = selectedLangs
 			const { phrases = [] } = captions[languageCode]
 			setRegions(phrases)
@@ -172,7 +175,6 @@ export default function useCaptions(captionTracksYoutube, setSnackbar) {
 		addCaptions,
 		langAvatarClickHandler,
 		captionTextEdited,
-		setWavesurfer,
 		setRegions
 	}
 }

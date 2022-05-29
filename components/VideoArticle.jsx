@@ -7,7 +7,8 @@ import ShowingModeSwitcher from './DisplayModeSwitcher'
 import Phrases from './video/Phrases'
 import { useRef, createContext, useContext } from 'react'
 import useCaptions from './useCaptions'
-import usePlayer from './usePlayer'
+// import usePlayer from './usePlayer'
+import useWavesurfer from './useWavesurfer'
 import peaks from '../public/fake-content/peaks'
 
 import EditCaptionTextarea from './EditCaptionTextarea'
@@ -31,25 +32,23 @@ const VideoInfo = props => {
 
 	const { setSnackbar } = useContext(SnackbarContext)
 
-	const captionContextValue = useCaptions(captionTracksYoutube, setSnackbar)
-
-	const { setWavesurfer } = captionContextValue
-
 	const videoRef = useRef(null)
 	const audioRef = useRef(null)
 	const waveformContainerRef = useRef(null)
 	const timelineContainerRef = useRef(null)
 
-	const { onTimeUpdate, wavesurfer, isReady } = usePlayer({
+	const { wavesurfer, isReady } = useWavesurfer({
 		mediaElementRef: videoRef,
 		waveformContainerRef,
 		timelineContainerRef,
 		peaks
 	})
 
-	if (isReady) {
-		setWavesurfer(wavesurfer)
-	}
+	const captionContextValue = useCaptions({
+		captionTracksYoutube,
+		setSnackbar,
+		wavesurfer
+	})
 
 	const titleBlock = (
 		<div style={styles.block}>
@@ -74,7 +73,7 @@ const VideoInfo = props => {
 			// src='http://localhost:3000/nevzuk.mp4'
 			poster={poster}
 			style={{ width: '100%' }}
-			onTimeUpdate={onTimeUpdate}
+			// onTimeUpdate={onTimeUpdate}
 		></video>
 	)
 
