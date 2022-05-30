@@ -5,6 +5,7 @@ import { ThemeProvider } from '@material-ui/core'
 import theme from '../theme'
 import SnackbarProvider from '../components/SnackbarProvider'
 import Snackbar from '../components/Snackbar'
+import '../styles.css'
 
 export default function MyApp(props) {
 	const { Component, pageProps } = props

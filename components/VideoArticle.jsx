@@ -9,7 +9,7 @@ import { useRef, createContext, useContext } from 'react'
 import useCaptions from './useCaptions'
 // import usePlayer from './usePlayer'
 import useWavesurfer from './useWavesurfer'
-import peaks from '../public/fake-content/peaks'
+import peaks from '../public/fake-content/peaks-bad-english'
 
 import EditCaptionTextarea from './EditCaptionTextarea'
 import { SnackbarContext } from './SnackbarProvider'

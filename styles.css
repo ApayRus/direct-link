@@ -1,0 +1,9 @@
+.region-content {
+	line-height: 100%;
+	font-size: 0.8rem;
+	background-color: rgba(255, 255, 150, 0.5);
+}
+
+region > handle {
+	background-color: rgba(255, 255, 150, 0) !important;
+}
