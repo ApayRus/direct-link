@@ -6,8 +6,7 @@ export default async function initWavesurfer({
 	waveformContainer,
 	timelineContainer,
 	regions = [],
-	mediaElement,
-	peaks
+	mediaElement
 }) {
 	const { default: WaveSurfer } = await import('wavesurfer.js')
 	const { default: RegionsPlugin } = await import(
@@ -16,9 +15,6 @@ export default async function initWavesurfer({
 	const { default: TimelinePlugin } = await import(
 		'wavesurfer.js/src/plugin/timeline'
 	)
-
-	console.log('regions')
-	console.log(regions)
 
 	const waveformPromise = new Promise((resolve, reject) => {
 		const wavesurfer = WaveSurfer.create({
@@ -47,15 +43,13 @@ export default async function initWavesurfer({
 			]
 		})
 
-		wavesurfer.load(mediaElement, peaks)
-
-		wavesurfer.on('region-click', (region, event) => {
-			event.stopPropagation()
-			region.play()
-		})
+		wavesurfer.load(mediaElement, [])
 
 		wavesurfer.on('ready', () => {
 			resolve(wavesurfer)
+		})
+		wavesurfer.on('error', error => {
+			reject(console.log(error))
 		})
 	})
 

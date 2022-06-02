@@ -1,5 +1,4 @@
-// import WaveSurfer from 'wavesurfer.js'
-// import RegionsPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min'
+import axios from 'axios'
 import { useEffect, useRef, useState } from 'react'
 import initWavesurfer from '../wavesurfer'
 
@@ -7,7 +6,7 @@ export default function usePlayer({
 	mediaElementRef,
 	waveformContainerRef,
 	timelineContainerRef,
-	peaks
+	videoId
 }) {
 	const [playerState, setPlayerState] = useState({
 		isPlaying: false,
@@ -29,15 +28,24 @@ export default function usePlayer({
 			const wavesurfer = await initWavesurfer({
 				waveformContainer: waveformContainerRef.current,
 				timelineContainer: timelineContainerRef.current,
-				mediaElement: mediaElementRef.current,
-				peaks
+				mediaElement: mediaElementRef.current
+			})
+
+			wavesurfer.on('region-click', (region, event) => {
+				event.stopPropagation()
+				region.play()
 			})
 
 			wavesurferRef.current = wavesurfer
-
 			setPlayerState(oldState => ({ ...oldState, isReady: true }))
-
 			mediaElementRef.current.controls = true
+
+			//set peaks loaded from the server
+			const {
+				data: { data: peaks }
+			} = await axios(`http://localhost:3001/waveform/?id=${videoId}`)
+			wavesurfer.backend.setPeaks(peaks, wavesurfer.getDuration())
+			wavesurfer.drawBuffer()
 
 			console.log('wavesurfer')
 			console.log(wavesurfer)

@@ -11,6 +11,7 @@
         "@material-ui/core": "^4.12.4",
         "@material-ui/icons": "^4.11.3",
         "@material-ui/lab": "^4.0.0-alpha.61",
+        "axios": "^0.27.2",
         "frazy-parser": "^2.9.1",
         "next": "^12.1.6",
         "react": "^18.1.0",

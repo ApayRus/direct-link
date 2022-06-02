@@ -11,7 +11,8 @@ const VideoPage = props => {
 		urlVideo,
 		urlAudio,
 		captionTracks,
-		thumbnails
+		thumbnails,
+		videoId
 	} = props
 
 	const [displayMode, setDisplayMode] = useState('info') // | transcript
@@ -26,7 +27,8 @@ const VideoPage = props => {
 		thumbnails,
 		captionTracks,
 		displayMode,
-		setDisplayMode
+		setDisplayMode,
+		videoId
 	}
 
 	return (
@@ -40,6 +42,7 @@ export async function getServerSideProps({ query: { videoId } }) {
 	const info = await getVideoInfo(videoId)
 	return {
 		props: {
+			videoId,
 			...info
 		}
 	}

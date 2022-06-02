@@ -1,15 +1,12 @@
 import { Container, Typography } from '@material-ui/core'
 import CaptionList from './CaptionList'
 import Keywords from './video/Keywords'
-import Video from './video/Video'
 import Thumbnails from './video/Thumbnails'
 import ShowingModeSwitcher from './DisplayModeSwitcher'
 import Phrases from './video/Phrases'
 import { useRef, createContext, useContext } from 'react'
 import useCaptions from './useCaptions'
-// import usePlayer from './usePlayer'
 import useWavesurfer from './useWavesurfer'
-import peaks from '../public/fake-content/peaks-bad-english'
 
 import EditCaptionTextarea from './EditCaptionTextarea'
 import { SnackbarContext } from './SnackbarProvider'
@@ -27,7 +24,8 @@ const VideoInfo = props => {
 		description,
 		image: poster,
 		setDisplayMode,
-		displayMode
+		displayMode,
+		videoId
 	} = props
 
 	const { setSnackbar } = useContext(SnackbarContext)
@@ -41,7 +39,7 @@ const VideoInfo = props => {
 		mediaElementRef: videoRef,
 		waveformContainerRef,
 		timelineContainerRef,
-		peaks
+		videoId
 	})
 
 	const captionContextValue = useCaptions({
@@ -69,23 +67,14 @@ const VideoInfo = props => {
 			ref={videoRef}
 			controls
 			src={urlVideo}
-			// src='http://localhost:3000/videoplayback.m4a'
-			// src='http://localhost:3000/nevzuk.mp4'
 			poster={poster}
 			style={{ width: '100%' }}
-			// onTimeUpdate={onTimeUpdate}
 		></video>
 	)
 
 	const audioBlock = (
 		<div style={styles.block}>
-			<audio
-				ref={audioRef}
-				controls
-				// src={`http://localhost:3000/procrastinator_mind.m4a`}
-				src={urlAudio}
-				style={{ width: '100%' }}
-			/>
+			<audio ref={audioRef} controls src={urlAudio} style={{ width: '100%' }} />
 		</div>
 	)
 
