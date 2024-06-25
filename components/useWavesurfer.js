@@ -49,7 +49,7 @@ export default function usePlayer({
 	}, [])
 
 	// load waveform peaks from the server
-	useEffect(() => {
+	/* 	useEffect(() => {
 		axios(`http://localhost:3001/waveform/?id=${videoId}`)
 			.then(response => {
 				const {
@@ -75,7 +75,7 @@ export default function usePlayer({
 			wavesurfer.backend.setPeaks(peaksRef.current, wavesurfer.getDuration())
 			wavesurfer.drawBuffer()
 		}
-	}, [playerState])
+	}, [playerState]) */
 
 	// event handlers
 	useEffect(() => {
