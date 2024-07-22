@@ -5,7 +5,7 @@ import IconButton from '@material-ui/core/IconButton'
 import ClearIcon from '@material-ui/icons/Clear'
 import EnterIcon from '@material-ui/icons/ChangeHistory'
 import LinearProgress from '@material-ui/core/LinearProgress'
-import ytdl from 'ytdl-core'
+import ytdl from '@distube/ytdl-core'
 import { useRouter } from 'next/router'
 
 const useStyles = makeStyles(theme => ({

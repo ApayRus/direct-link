@@ -1,4 +1,4 @@
-import ytdl from 'ytdl-core'
+import ytdl from '@distube/ytdl-core'
 
 // for public api
 export default async (req, res) => {
