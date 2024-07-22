@@ -17,8 +17,8 @@ export async function getVideoInfo(videoId) {
 	} catch (err) {
 		console.log(err)
 	}
-	const { url: urlVideo } = info.formats.find(elem => elem.itag === 18)
-	const { url: urlAudio } = info.formats.find(elem => elem.itag === 140)
+	const { url: urlVideo } = info?.formats.find(elem => elem.itag === 18) || {}
+	const { url: urlAudio } = info?.formats.find(elem => elem.itag === 140) || {}
 	const {
 		videoDetails: { title, description = {}, keywords = [], thumbnails = [] },
 		player_response: {
